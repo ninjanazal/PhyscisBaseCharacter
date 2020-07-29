@@ -7,8 +7,8 @@ Game that joins farming and warehouse workd. Need to fill orders in the warehous
 Base character model, with bones and painted influenc
 * [x] Start base model
 * [ ] Better base model
-* [ ] Bones
-* [ ] weight painting
+* [x] Bones
+* [x] Base weight painting
 
 # Mechanic implementation
-(starting soon 🌝)
+* [ ] Base mesh on basic ragdoll
