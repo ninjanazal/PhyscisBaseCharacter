@@ -12,5 +12,6 @@ Base character model, with bones and painted influenc
 
 # Mechanic implementation
 * [x] Base mesh on basic ragdoll
+* [ ] Self balance
 * [ ] Muscles to ragdoll physics
 * [ ] Movement to active ragdoll
