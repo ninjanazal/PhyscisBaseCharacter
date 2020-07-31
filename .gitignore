@@ -58,4 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Local ignored libs
 Farmers WareHouse - game/Library/
+Farmers WareHouse - game/UserSettings/
+Farmers WareHouse - game/.vscode/
