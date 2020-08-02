@@ -25,6 +25,9 @@ public class PhysicsCharacterController : MonoBehaviour
 
 
     #region Private Methods
+    /// <summary>
+    /// Inicia o componente fisico do controlador do personagem, procura por ossos elementais e retem a sua referencia
+    /// </summary>
     private void Init()
     {
 

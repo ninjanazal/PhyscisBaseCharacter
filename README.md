@@ -15,3 +15,8 @@ Base character model, with bones and painted influenc
 * [ ] Self balance
 * [ ] Muscles to ragdoll physics
 * [ ] Movement to active ragdoll
+
+# Information system
+    - [ ] Fps information
+        - [ ] Async Implementation
+    - [ ] Debug information
