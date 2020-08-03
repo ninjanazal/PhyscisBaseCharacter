@@ -9,12 +9,13 @@ public class PhysicsCharacterController : MonoBehaviour
     public GameObject SkeletonBase;
 
     // Lista de todas as joints definidas no modelo
-    private CharacterJoint[] joints;
+    private Bone[] Bones;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        // inicia o comportamento do componente
+        Init();
     }
 
     // Update is called once per frame
@@ -26,10 +27,12 @@ public class PhysicsCharacterController : MonoBehaviour
 
     #region Private Methods
     /// <summary>
-    /// Inicia o componente fisico do controlador do personagem, procura por ossos elementais e retem a sua referencia
+    /// Inicia o componente fisico do controlador do personagem,
+    /// procura por ossos elementais e retem a sua referencia
     /// </summary>
     private void Init()
     {
+        // precorre todos os filhos do objecto referenciado como base
 
     }
 

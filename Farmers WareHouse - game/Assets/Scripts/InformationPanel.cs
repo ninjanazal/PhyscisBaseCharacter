@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
-using System.Threading;
-using System.Threading.Tasks;
-using System;
+
 
 /// <summary>
 /// Contrador para o painel de informações no ecra
@@ -16,43 +12,40 @@ public class InformationPanel : MonoBehaviour
 
     //  Valores internos
     // valor aproximado para o contador de fps
-    private float current_fps = 0f;
-
-    // task para o determinar o valor de fps
-    private Task fpsCalculation_task;
-
-    void Start()
-    {   // inicia o metodo async com um token para cancelamento
-        fpsCalculation_task = FpsCalculationAsync();
-    }
+    private float fps_timer = 0f;
 
     private void Update()
     {
-        // verifica se o valor escrito no texto é diferente do valor determinado ao momento
-        if (fpsvalue.text != ((int)(current_fps)).ToString())
-        {
-            Debug.Log("New Value");
-            // caso sejam diferentes
-            // atribui o mesmo valor
-            fpsvalue.text = ((int)(current_fps)).ToString();
-            // atribui a cor do texto de acordo com o valor de fps
-            fpsvalue.color = current_fps >= 60.0f ? Color.green : Color.red;
-        }
+        // executa o metodo que determina uma aproximação de fps
+        CalculateFps();
     }
 
-    #region Async methods
-    private async Task FpsCalculationAsync()
+    #region Private methods
+    /// <summary>
+    /// Determina um valor apriximado do numero de imagens estao a ser geradas por segundo
+    /// </summary>
+    private void CalculateFps()
     {
-        // esta metodo deve correr em backgraound enquanto activo
-        while (true)
+        // avalia se passou 1s para que seja gerado um novo valor para os fps
+        if (fps_timer > 1.0f)
         {
-            // determina aproximadamente a quantos fps está a correr o programa
-            current_fps = 60f / Time.deltaTime;
-            // aguarda 1s para rever novamente
-            await Task.Delay(1000);
+            // reenicia o contador
+            fps_timer = 0f;
+            // valor estipulado para o tempo que demorou a produzir a ultima imagem
+            var value = ((int)(1f / Time.unscaledDeltaTime));
+
+            // atribui cor ao contador de acordo com o valor de fps
+            fpsvalue.color = value >= 60 ? Color.green :
+                value >= 40 ? Color.yellow : Color.red;
+            // atribui o valor ao texto
+            fpsvalue.text = value.ToString();
+        }
+        // caso nao tenha ocorrido o tempo necessário
+        else
+        {
+            // incrementa o tempo passado pela ultima iteraçao
+            fps_timer += Time.deltaTime;
         }
     }
-
-
     #endregion
 }
