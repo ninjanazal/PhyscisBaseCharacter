@@ -31,7 +31,7 @@ public class PhysicsCharControllerEditor : Editor
 
         // link entre as propriedades do custom editor e o componente
         skeletonBase = serializedObject.FindProperty("SkeletonBase");   // base do objecto
-        usefulBones = serializedObject.FindProperty("Bones");           // array de ossos
+        usefulBones = serializedObject.FindProperty("bones");           // array de ossos
 
         // actualiza todos os objectos referenciados
         serializedObject.Update();
@@ -64,7 +64,8 @@ public class PhysicsCharControllerEditor : Editor
         // Information
         EditorGUILayout.LabelField("Bone Structure", EditorStyles.boldLabel);
         // avalia se já estao definidos os ossos no componente
-        if (usefulBones != null)
+
+        if (usefulBones.arraySize > 0 && usefulBones != null)
             // array de objectos
             EditorGUILayout.ObjectField(usefulBones);
         else

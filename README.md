@@ -20,5 +20,6 @@ Base character model, with bones and painted influenc
 
 
 # Information system
+### Debug Info
     - * [x] Fps information
     - * [x] Debug information
