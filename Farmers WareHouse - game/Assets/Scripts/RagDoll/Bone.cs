@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class Bone
     // componentes presentes no osso
     private CharacterJoint bone_joint;
     private Rigidbody bone_rb;
+    private Transform bone_transform;
 
     /// <summary>
     /// COnstrutor da classe de oso
@@ -30,6 +32,8 @@ public class Bone
         bone_joint = bone_GO.GetComponent<CharacterJoint>();
         // referencia para o componente de rigidbody
         bone_rb = bone_GO.GetComponent<Rigidbody>();
+        // referencia para o transform do osso
+        bone_transform = bone_GO.transform;
     }
 
 
@@ -39,6 +43,17 @@ public class Bone
     /// Retorna o nome do osso
     /// </summary>
     public string Name { get { return bone_name; } }
-
+    /// <summary>
+    /// Retorna referencia para a joint do osso
+    /// </summary>
+    public CharacterJoint BoneJoint { get { return bone_joint; } }
+    /// <summary>
+    /// Retorna o RigidBody associado ao osso
+    /// </summary>
+    public Rigidbody BoneRB { get { return bone_rb; } }
+    /// <summary>
+    /// Retorna o transform do osso
+    /// </summary>
+    public Transform BoneTransform { get { return bone_transform; } }
     #endregion
 }

@@ -1,19 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [CustomEditor(typeof(PhysicsCharacterController))]
 public class PhysicsCharControllerEditor : Editor
 {
     // Vista de editor personalizada para o controlo fisico do personagem
-    // referencia para o target (Script original)
-    private PhysicsCharacterController Currenttarget;
     // referencia para o objecto de raiz do esqueleto
-    private SerializedProperty skeletonBase;
     // referencia para oarray de ossos uteis
-    private SerializedProperty usefulBones;
+    private SerializedProperty skeletonBase;
+    private PhysicsCharacterController physicsCtrl_target;
 
     public override void OnInspectorGUI()
     {
@@ -25,18 +20,18 @@ public class PhysicsCharControllerEditor : Editor
     // comporta todos a atualizaçao das referencia para objectos
     private void GUIReferences()
     {
-        // guarda a referencia do target script
-        var serializedObject = new SerializedObject(target);
-
+        // guarda a referencia para o script
+        physicsCtrl_target = (PhysicsCharacterController)serializedObject.targetObject;
 
         // link entre as propriedades do custom editor e o componente
         skeletonBase = serializedObject.FindProperty("SkeletonBase");   // base do objecto
-        usefulBones = serializedObject.FindProperty("bones");           // array de ossos
 
         // actualiza todos os objectos referenciados
         serializedObject.Update();
+
         // chama comportamento de layout
         Layout();
+
         // aplica as modificaçoes feitas no editor ao componente
         serializedObject.ApplyModifiedProperties();
     }
@@ -63,14 +58,28 @@ public class PhysicsCharControllerEditor : Editor
         EditorGUILayout.BeginVertical("Box");
         // Information
         EditorGUILayout.LabelField("Bone Structure", EditorStyles.boldLabel);
-        // avalia se já estao definidos os ossos no componente
 
-        if (usefulBones.arraySize > 0 && usefulBones != null)
-            // array de objectos
-            EditorGUILayout.ObjectField(usefulBones);
-        else
-            // caso seja null, informa que deve ser determinado os ossos uteis
+        // avalia se já estao definidos os ossos no componente
+        if (physicsCtrl_target.GetBoneCount == 0)
+        {
+            // caso nao existam elementos
             EditorGUILayout.HelpBox("Useful Bones not defined!", MessageType.Error);
+            // Botao que calcula determina os ossos
+            if (GUILayout.Button("Validate Bones")) physicsCtrl_target.CalculateBones();
+        }
+        else
+        {
+            // precorre todos os elementos presentes
+            for (int i = 0; i < physicsCtrl_target.GetBoneCount; i++)
+            {
+                // extrai o objecto do elemento a ser trabalhado, e transforma num objecto do tipo "Bone"
+                Bone value = physicsCtrl_target.GetBoneByIndex(i);
+                // Mostra a informação do osso 
+                EditorGUILayout.LabelField(value.Name, EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Joint Rotation", value.BoneTransform.localRotation.eulerAngles.ToString());
+
+            }
+        }
 
         EditorGUILayout.Space();
         EditorGUILayout.EndVertical();
