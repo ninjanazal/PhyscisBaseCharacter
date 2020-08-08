@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
-
+using System;
 
 public class BetterRagDoll : EditorWindow
 {
-    // campos publicos necessários
+    // elementos necessários para a criaçao de uma ragdoll dinamica
     public GameObject Head, MidleSpine, Hips, LArm, LElbow, RArm, RElbom, LLeg, LKnee, RLeg, RKnee;
 
     /// <summary>
@@ -15,13 +15,11 @@ public class BetterRagDoll : EditorWindow
     public static void Init()
     {
         // Cria uma janela ao inicial e guarda da mesma
-        //var thisWindow = EditorWindow.GetWindow(typeof(BetterRagDoll), true, "Better RagDolls");
         var thisWindow = EditorWindow.CreateInstance<BetterRagDoll>();
 
-        // define o nome a mostrar no titulo
-        thisWindow.titleContent.text = "Better RagDolls";
-        // mostra a janela definida
-        thisWindow.Show();
+        thisWindow.titleContent.text = "Better RagDolls";   // define o nome a mostrar no titulo
+        thisWindow.minSize = new Vector2(380f, 400f);        // define o tamanho minimo da janela        
+        thisWindow.Show();                                  // mostra a janela definida
 
         // debug do nome
         Debug.Log(thisWindow.titleContent.text + "  " + thisWindow.position.width + "  " + thisWindow.position.height);
@@ -33,20 +31,35 @@ public class BetterRagDoll : EditorWindow
         // inicia o wrapper vertical inicial
         EditorGUILayout.BeginVertical("BOX");
 
-        // mostra uma label
+        // Labels informativas
         EditorGUILayout.LabelField("Better RagDolls by BronkeLamp", EditorStyles.boldLabel);
-        // descriçao 
         EditorGUILayout.LabelField("Select all the parts needed to create a base structure for the doll");
-        // informa o tamanho actual da janela
-        if (GUILayout.Button("Get Current Size"))
-        { Debug.Log(EditorGUIUtility.currentViewWidth+ "  " + position.height); }
 
         // posicionamento dos elementos
         #region Elements Layout
-
-
+        //estrutura de elementos para input
+        DrawInputFields();
         #endregion
+
         // termina o wrapper vertical
         EditorGUILayout.EndVertical();
     }
+
+    // desenha todo o corpo de imput
+    private void DrawInputFields()
+    {
+        // verifica se todos os elementos estao preenchidos
+        CheckNull();
+
+    }
+
+    #region Private Methods
+    // verifica se todos os elementos do array nao estao nulos
+    private bool CheckNull()
+    {
+        // avalia para cada elemento se é nulo
+        return Head && MidleSpine && Hips && LArm && LElbow && RArm && RElbom && LLeg && LKnee && RLeg && RKnee;
+    }
+
+    #endregion
 }
