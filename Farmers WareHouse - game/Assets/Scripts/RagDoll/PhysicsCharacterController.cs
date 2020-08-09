@@ -5,23 +5,11 @@ public class PhysicsCharacterController : MonoBehaviour
 {
     // Variaveis publicas
     // referencia para os objectos referenciados como ossos chave
+    public GameObject Head, Spine, Hips, LArm, LElbow, RArm, RElbow, LLeg, LKnee, RLeg, RKnee;
+
     
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     #region Private Methods
-    
+
     #endregion
 
     #region Public Methods
