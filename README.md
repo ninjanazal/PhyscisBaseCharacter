@@ -28,4 +28,4 @@ Base character model, with bones and painted influence
 
 # Development ScreenShots
 ### Basing ragdol movement 
-![Movement Gif](https://i.imgur.com/8SHW8ol.gif)
+* Basic physics movement : https://i.imgur.com/8SHW8ol.gif
