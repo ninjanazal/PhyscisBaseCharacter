@@ -4,15 +4,31 @@ using UnityEngine;
 public class PhysicsCharacterController : MonoBehaviour
 {
     // Variaveis publicas
-    // referencia para os objectos referenciados como ossos chave
-    public GameObject Head, Spine, Hips, LArm, LElbow, RArm, RElbow, LLeg, LKnee, RLeg, RKnee;
 
-    
+    // private var
+    private GameObject[] parts = new GameObject[11];
+
     #region Private Methods
+    // On Start
+    private void Start()
+    {
+        // evaluate if all the parts have a GO reffered
+        CheckAllComponents();
 
+    }
+
+    // Internal methods
+    /// <summary>
+    /// check if all the body components are referend correctly
+    /// </summary>
+    private void CheckAllComponents()
+    {
+    }
     #endregion
 
     #region Public Methods
+
+
 
     #endregion
 }

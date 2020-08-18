@@ -5,7 +5,9 @@ using System;
 public class BetterRagDoll : EditorWindow
 {
     // elementos necessários para a criaçao de uma ragdoll dinamica
-    public GameObject Head, MidleSpine, Hips, LArm, LElbow, RArm, RElbom, LLeg, LKnee, RLeg, RKnee;
+    private GameObject Head, MidleSpine, Hips, LArm, LElbow, RArm, RElbom, LLeg, LKnee, RLeg, RKnee;
+    // referenc to the Go that hosts the physics system
+    private GameObject TargetGO;
 
     /// <summary>
     /// Custom Tool for creating ragdolls with some configurable joints
@@ -14,15 +16,17 @@ public class BetterRagDoll : EditorWindow
     // Inicia a janela
     public static void Init()
     {
+        // serializable properties
+
         // Cria uma janela ao inicial e guarda da mesma
         var thisWindow = EditorWindow.CreateInstance<BetterRagDoll>();
+
+        #region Init SerializeProp
+        #endregion
 
         thisWindow.titleContent.text = "Better RagDolls";   // define o nome a mostrar no titulo
         thisWindow.minSize = new Vector2(380f, 400f);        // define o tamanho minimo da janela        
         thisWindow.Show();                                  // mostra a janela definida
-
-        // debug do nome
-        Debug.Log(thisWindow.titleContent.text + "  " + thisWindow.position.width + "  " + thisWindow.position.height);
     }
 
     // ao desenha
@@ -48,8 +52,13 @@ public class BetterRagDoll : EditorWindow
     // desenha todo o corpo de imput
     private void DrawInputFields()
     {
-        // verifica se todos os elementos estao preenchidos
-        CheckNull();
+        // Input target for referenc the hoster
+        EditorGUILayout.BeginHorizontal();
+        // fild to input the target object for  host the physcs controller
+        EditorGUILayout.LabelField("Host for physics System");
+        // strores the selected target
+        TargetGO = (GameObject)EditorGUILayout.ObjectField(TargetGO, typeof(GameObject), true);
+        EditorGUILayout.EndHorizontal();
 
     }
 
