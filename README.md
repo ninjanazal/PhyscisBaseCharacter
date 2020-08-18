@@ -24,3 +24,8 @@ Base character model, with bones and painted influence
 ### Debug Info
 * [x] Fps information
 * [x] Debug information
+
+
+# Development ScreenShots
+### Basing ragdol movement 
+![Movement Gif](https://i.imgur.com/8SHW8ol.gif)
