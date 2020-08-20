@@ -21,15 +21,19 @@ public class PhysicsCharacterController : MonoBehaviour
     #region Private Vars
     // List of parts
     [SerializeField] private List<Part> bodyParts = new List<Part>();
+    public float BaseMassScale = 30f;  // Base mass Scale
+
+    // referenc to the "StandUp" joint
+    private ConfigurableJoint StandJoint;
+    public bool isStandingUp { get; private set; }
+
     #endregion
 
     // On Start
     private void Start()
     {
-        // Init all the partes in list
-        InitParts();
     }
-  
+
     // Fixed Update
     private void FixedUpdate()
     {
@@ -47,8 +51,15 @@ public class PhysicsCharacterController : MonoBehaviour
     /// <summary>
     /// Collect data from the main objects, get the joint and check if have a valid target
     /// </summary>
-    private void InitParts()
+    public void InitParts()
     {
+        // Setting to the stangin pos
+        isStandingUp = true;
+
+        // stores the reference for the standoUp Joint
+        StandJoint = GetComponent<ConfigurableJoint>();
+        StandJoint.connectedMassScale = BaseMassScale;
+
         // evaluate all the elements in list
         foreach (var bPart in bodyParts)
         {
@@ -76,5 +87,15 @@ public class PhysicsCharacterController : MonoBehaviour
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// switch the standing state
+    /// </summary>
+    public void Switchstanding()
+    {
+        // invert the state
+        if (isStandingUp) { isStandingUp = false; StandJoint.connectedMassScale = 0f; }
+        else { isStandingUp = true; StandJoint.connectedMassScale = BaseMassScale; }
     }
 }
