@@ -16,7 +16,7 @@ Base character model, with bones and painted influence
     - * [x] Configurable joint set
 * [x] Movement to active ragdoll
 * [ ] Active ragdoll response to player input
-	- * [ ] Horizontal movement
+	- * [x] Horizontal movement
 	- * [ ] Player action response
 		- [ ] Grab/Drag Objects
 
@@ -25,6 +25,10 @@ Base character model, with bones and painted influence
 * [x] Fps information
 * [x] Debug information
 
+# Dev Notes
+- Current notes
+	- Make Better Input orientation response 
+	- Fix new input look 
 
 # Development ScreenShots
 ### Basing ragdol movement 
