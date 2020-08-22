@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerCore : MonoBehaviour
 {
-    [Header("Input Asset")]
-    public float baseVelocity;
 
     // Reference to the Physics character Controller
     private PhysicsCharacterController physicsCharacter;
@@ -16,28 +14,21 @@ public class PlayerCore : MonoBehaviour
     // Internel vars
     // ref to input controller
     private InputActions inputController;
-    public bool stunted { get; private set; }
+    private CameraController cameraController;
+
     // input value
     private Vector2 inputAmount = Vector2.zero;
+    public bool stunted { get; private set; }
 
-    private void Awake()
-    {
-        inputController = new InputActions();
-
-        // enable the event for player movement input
-        inputController.PlayerLocomotion.Enable();
-
-        // regist input
-        inputController.PlayerLocomotion.Movement.performed +=
-            ctx => inputAmount = ctx.ReadValue<Vector2>(); ;
-        // 
-        inputController.PlayerLocomotion.Movement.canceled +=
-            _ => inputAmount = Vector2.zero;
-    }
-
+    // Exposed Vars
+    [Header("Character Configuration")]
+    [Tooltip("Character base acceleration")] public float characterAcceleration = 200f;
+    [Tooltip("Character base angular acceleration")] public float characterAngularAcceleration = 5f;
+    [Tooltip("Active drag"), Range(0f, 1f)] public float activeDrag = 0.25f;
     // Start is called before the first frame update
     void Start()
     {
+        InitInput();        // Initialize the input 
         InitController();   // Initialize this controller
     }
 
@@ -45,6 +36,8 @@ public class PlayerCore : MonoBehaviour
     void Update()
     {
 
+        // Update Animator State
+        UpdateAnimator();
 
     }
 
@@ -52,13 +45,31 @@ public class PlayerCore : MonoBehaviour
     private void FixedUpdate()
     {
         // if is stuned, ignore input response
-        if (stunted) return;
+        if (stunted || !cameraController) return;
 
         // Physics input for player
         InputPhysicsResponse();
     }
 
     #region Internal Methods
+    /// <summary>
+    /// Initialize the controller with movement configured
+    /// </summary>
+    private void InitInput()
+    {
+        inputController = new InputActions();
+
+        // regist input
+        inputController.PlayerLocomotion.Movement.performed +=
+            ctx => inputAmount = ctx.ReadValue<Vector2>(); ;
+        // we release
+        inputController.PlayerLocomotion.Movement.canceled +=
+            _ => inputAmount = Vector2.zero;
+        // enable
+        SetControls(true);
+
+    }
+
     /// <summary>
     /// initial setup of this controller
     /// </summary>
@@ -87,7 +98,58 @@ public class PlayerCore : MonoBehaviour
     /// </summary>
     private void InputPhysicsResponse()
     {
-        Debug.Log($"Changed to {inputAmount}");
+        // if exists motin to be apllied to the rb
+        if (inputAmount != Vector2.zero)
+            // move the p+layer
+            physicsCharacter.Move(
+                ((cameraController.GetCameraToScreenForward * inputAmount.y) +
+                (cameraController.GetCameraToScreenRight * inputAmount.x)) *
+                characterAcceleration * Time.deltaTime);
+        else
+            // if not, try to stop the player
+            physicsCharacter.DragInput(activeDrag);
+
+        // physic based orientation
+        physicsCharacter.OrientPhyscsCharacter(characterAngularAcceleration * Time.deltaTime);
+    }
+
+    /// <summary>
+    /// Update the animator state
+    /// </summary>
+    private void UpdateAnimator()
+    {
+        // update the moving bool
+        playerTargetAnimator.SetBool("IsMoving", physicsCharacter.GetCurrentVelocity > 0.1f);
+
+    }
+    #endregion
+
+    #region Public Methods
+    /// <summary>
+    /// Define the state for the input responce
+    /// </summary>
+    /// <param name="value">State to set</param>
+    public void SetControls(bool value)
+    {
+        if (value)
+            inputController.PlayerLocomotion.Enable();
+        else
+            inputController.PlayerLocomotion.Disable();
+    }
+
+    /// <summary>
+    /// Set the camera controller
+    /// </summary>
+    public CameraController CameraControlls
+    {
+        get => cameraController;
+        // Custom set
+        set
+        {
+            cameraController = value;
+            // if null deactivate
+            SetControls(cameraController ? true : false);
+        }
     }
     #endregion
 }

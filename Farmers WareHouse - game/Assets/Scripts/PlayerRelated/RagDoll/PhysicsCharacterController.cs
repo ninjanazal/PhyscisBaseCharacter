@@ -25,6 +25,8 @@ public class PhysicsCharacterController : MonoBehaviour
 
     // referenc to the "StandUp" joint
     private ConfigurableJoint StandJoint;
+    private Rigidbody mainRB;
+    // Bool states
     public bool isStandingUp { get; private set; }
 
     #endregion
@@ -59,6 +61,8 @@ public class PhysicsCharacterController : MonoBehaviour
         // stores the reference for the standoUp Joint
         StandJoint = GetComponent<ConfigurableJoint>();
         StandJoint.connectedMassScale = BaseMassScale;
+        // ref to the main rigidbody
+        mainRB = GetComponent<Rigidbody>();
 
         // evaluate all the elements in list
         foreach (var bPart in bodyParts)
@@ -97,5 +101,68 @@ public class PhysicsCharacterController : MonoBehaviour
         // invert the state
         if (isStandingUp) { isStandingUp = false; StandJoint.connectedMassScale = 0f; }
         else { isStandingUp = true; StandJoint.connectedMassScale = BaseMassScale; }
+    }
+
+    /// <summary>
+    /// Apply motion to this rigid body
+    /// </summary>
+    /// <param name="direction">Target Motion</param>
+    public void Move(Vector3 direction)
+    {
+        //  check if the main rigid body exists
+        if (!mainRB) return;
+
+        // if so aply the motion
+        // Draw the debug line
+        Debug.DrawLine(this.transform.position, this.transform.position + direction);
+        mainRB.AddForce(direction, ForceMode.Acceleration);
+    }
+
+    /// <summary>
+    /// Active drag
+    /// </summary>
+    /// <param name="value">Drag amount</param>
+    public void DragInput(float value)
+    {
+        // check if righid body exists
+        if (!mainRB) return;
+        // negative velocitu
+        mainRB.AddForce(-new Vector3(mainRB.velocity.x, 0f, mainRB.velocity.z) * value);
+    }
+
+    /// <summary>
+    /// Orient the player based on velocity direction
+    /// </summary>
+    /// <param name="value">Angular velocity</param>
+    public void OrientPhyscsCharacter(float value)
+    {
+        // if velocity is relevant
+        if (GetCurrentVelocity > 0.1f)
+        {
+            var calculateAngle = Vector3.Angle(this.transform.forward, mainRB.velocity.normalized) * value;
+            // defines the new rotation            
+            this.transform.Rotate(Vector3.up, calculateAngle > 360 - calculateAngle ?
+                (360 - calculateAngle) : calculateAngle);
+
+
+        }
+
+    }
+
+    #region Getters
+    /// <summary>
+    /// Get The physics forward
+    /// </summary>
+    /// <return>Return the vector forward</return>
+    public Vector3 GetPhysicsForward { get { return this.transform.forward; } }
+    public float GetCurrentVelocity { get { return mainRB.velocity.magnitude; } }
+    #endregion
+
+    // Debug information
+    private void OnDrawGizmos()
+    {
+        // Draw Forward
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2f);
     }
 }
