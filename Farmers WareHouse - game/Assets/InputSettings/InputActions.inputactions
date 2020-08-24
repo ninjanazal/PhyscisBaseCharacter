@@ -9,7 +9,7 @@
                     "name": "Movement",
                     "type": "Value",
                     "id": "ede41f68-f96e-4486-b064-496deafb19df",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
                 }

@@ -22,12 +22,15 @@ public class PhysicsCharacterController : MonoBehaviour
     // List of parts
     [SerializeField] private List<Part> bodyParts = new List<Part>();
     public float BaseMassScale = 30f;  // Base mass Scale
+    public Vector3 CharacterGravity = Vector3.down; // Custom gameobject gravity
 
     // referenc to the "StandUp" joint
     private ConfigurableJoint StandJoint;
     private Rigidbody mainRB;
     // Bool states
     public bool isStandingUp { get; private set; }
+    // Behaviour
+    private float maxVelocity = 0f;
 
     #endregion
 
@@ -48,6 +51,7 @@ public class PhysicsCharacterController : MonoBehaviour
             else
                 part.partJoint.targetRotation = part.partTarget.transform.localRotation;
         }
+        // add the gravity force 
     }
 
     /// <summary>
@@ -63,7 +67,8 @@ public class PhysicsCharacterController : MonoBehaviour
         StandJoint.connectedMassScale = BaseMassScale;
         // ref to the main rigidbody
         mainRB = GetComponent<Rigidbody>();
-
+        // change the current gravity
+        //mainRB.useGravity = false;
         // evaluate all the elements in list
         foreach (var bPart in bodyParts)
         {
@@ -104,10 +109,16 @@ public class PhysicsCharacterController : MonoBehaviour
     }
 
     /// <summary>
+    /// Define the max velocity for the caracter
+    /// </summary>
+    /// <param name="value">Velocity</param>
+    public void SetCharacterMaxSpeed(float value) { maxVelocity = value; }
+
+    /// <summary>
     /// Apply motion to this rigid body
     /// </summary>
     /// <param name="direction">Target Motion</param>
-    public void Move(Vector3 direction)
+    public void Move(Vector3 direction, float angularVel)
     {
         //  check if the main rigid body exists
         if (!mainRB) return;
@@ -115,7 +126,14 @@ public class PhysicsCharacterController : MonoBehaviour
         // if so aply the motion
         // Draw the debug line
         Debug.DrawLine(this.transform.position, this.transform.position + direction);
-        mainRB.AddForce(direction, ForceMode.Acceleration);
+        mainRB.AddForce(direction, ForceMode.Impulse);
+
+        // keep the maximum velocity inside range
+        if (GetCurrentVelocity > maxVelocity)
+            mainRB.velocity = Vector3.ClampMagnitude(mainRB.velocity, maxVelocity);
+
+        // call the orient player method
+        OrientPhyscsCharacter(direction, angularVel);
     }
 
     /// <summary>
@@ -127,26 +145,20 @@ public class PhysicsCharacterController : MonoBehaviour
         // check if righid body exists
         if (!mainRB) return;
         // negative velocitu
-        mainRB.AddForce(-new Vector3(mainRB.velocity.x, 0f, mainRB.velocity.z) * value);
+        mainRB.AddForce(-new Vector3(mainRB.velocity.x, 0f, mainRB.velocity.z) * value, ForceMode.Impulse);
     }
 
     /// <summary>
     /// Orient the player based on velocity direction
     /// </summary>
     /// <param name="value">Angular velocity</param>
-    public void OrientPhyscsCharacter(float value)
+    private void OrientPhyscsCharacter(Vector3 value, float angularVel)
     {
         // if velocity is relevant
-        if (GetCurrentVelocity > 0.1f)
-        {
-            var calculateAngle = Vector3.Angle(this.transform.forward, mainRB.velocity.normalized) * value;
-            // defines the new rotation            
-            this.transform.Rotate(Vector3.up, calculateAngle > 360 - calculateAngle ?
-                (360 - calculateAngle) : calculateAngle);
-
-
-        }
-
+        if (GetCurrentVelocity != 0f)
+            // rotate the player towards the input direction
+            this.transform.rotation =
+                Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(value, Vector3.up), angularVel);
     }
 
     #region Getters

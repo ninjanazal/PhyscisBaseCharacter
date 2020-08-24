@@ -17,6 +17,7 @@ Base character model, with bones and painted influence
 * [x] Movement to active ragdoll
 * [ ] Active ragdoll response to player input
 	- * [x] Horizontal movement
+		- * [x] Correct player rotate to direction
 	- * [ ] Player action response
 		- [ ] Grab/Drag Objects
 
@@ -27,9 +28,10 @@ Base character model, with bones and painted influence
 
 # Dev Notes
 - Current notes
-	- Make Better Input orientation response 
-	- Fix new input look 
+	- Implement player move on inclined surfaces
+	- Slop implementation
 
 # Development ScreenShots
 ### Basing ragdol movement 
 * Basic physics movement : https://i.imgur.com/8SHW8ol.gif
+![](https://i.imgur.com/8SHW8ol.gif)

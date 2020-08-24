@@ -24,7 +24,11 @@ public class PlayerCore : MonoBehaviour
     [Header("Character Configuration")]
     [Tooltip("Character base acceleration")] public float characterAcceleration = 200f;
     [Tooltip("Character base angular acceleration")] public float characterAngularAcceleration = 5f;
+    [Tooltip("Character max velocity")] public float characterMaxVelocity = 0f;
     [Tooltip("Active drag"), Range(0f, 1f)] public float activeDrag = 0.25f;
+
+    [Header("Animation Controls")]
+    [Tooltip("Walking animation based on current speed"), Range(0f, 1f)] public float animationSpeedInfluence = 0.2f; 
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +42,6 @@ public class PlayerCore : MonoBehaviour
 
         // Update Animator State
         UpdateAnimator();
-
     }
 
 
@@ -88,6 +91,8 @@ public class PlayerCore : MonoBehaviour
         // Debug information and initialize  the parts
         InformationPanel.DebugConsoleInput("Physics System connected!");
         physicsCharacter.InitParts();
+        // Define the maximum velocity
+        physicsCharacter.SetCharacterMaxSpeed(characterMaxVelocity);
 
         // init vars
         stunted = false;
@@ -104,13 +109,11 @@ public class PlayerCore : MonoBehaviour
             physicsCharacter.Move(
                 ((cameraController.GetCameraToScreenForward * inputAmount.y) +
                 (cameraController.GetCameraToScreenRight * inputAmount.x)) *
-                characterAcceleration * Time.deltaTime);
+                characterAcceleration, characterAngularAcceleration);
         else
             // if not, try to stop the player
             physicsCharacter.DragInput(activeDrag);
 
-        // physic based orientation
-        physicsCharacter.OrientPhyscsCharacter(characterAngularAcceleration * Time.deltaTime);
     }
 
     /// <summary>
@@ -120,6 +123,7 @@ public class PlayerCore : MonoBehaviour
     {
         // update the moving bool
         playerTargetAnimator.SetBool("IsMoving", physicsCharacter.GetCurrentVelocity > 0.1f);
+        playerTargetAnimator.SetFloat("WalkingSpeed", physicsCharacter.GetCurrentVelocity * animationSpeedInfluence);
 
     }
     #endregion
