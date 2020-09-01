@@ -6060,6 +6060,11 @@ PrefabInstance:
       propertyPath: collisionMask.m_Bits
       value: 1024
       objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: groundTestsize
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_ConnectedAnchor.y

@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
-using UnityEditor.Experimental.TerrainAPI;
 
 // Custom editor for the physics character controller
 [CustomEditor(typeof(PhysicsCharacterController))]
@@ -11,6 +8,7 @@ public class PhysicsCharacterControllerEditor : Editor
     // serializedProperties
     SerializedProperty partList, baseMass;
     SerializedProperty playerGravity, collisionMask;
+    SerializedProperty groundCheckThreshold;
 
     //ON enable
     private void OnEnable()
@@ -20,6 +18,7 @@ public class PhysicsCharacterControllerEditor : Editor
         baseMass = serializedObject.FindProperty("BaseMassScale");          // Base character mass
         playerGravity = serializedObject.FindProperty("CharacterGravity");  // Gravity value
         collisionMask = serializedObject.FindProperty("collisionMask");     // collision Mask
+        groundCheckThreshold = serializedObject.FindProperty("groundTestsize"); // value for the ground detection threshold
     }
 
     // on inspector GUIO
@@ -55,8 +54,14 @@ public class PhysicsCharacterControllerEditor : Editor
         // Colision mask
         EditorGUILayout.LabelField("Collision Mask", EditorStyles.boldLabel);
         // display the dropDown, no lable
-        EditorGUILayout.PropertyField(collisionMask,new GUIContent());  
+        EditorGUILayout.PropertyField(collisionMask, new GUIContent());
         EditorGUILayout.Space(10f);
+
+        // Ground check value
+        EditorGUILayout.LabelField("Ground Check Threshold", EditorStyles.boldLabel);
+        EditorGUILayout.Slider(groundCheckThreshold,0f,1f);
+        EditorGUILayout.Space(10f);
+
 
         // Gravity value
         EditorGUILayout.LabelField("Character gravity value", EditorStyles.boldLabel);
