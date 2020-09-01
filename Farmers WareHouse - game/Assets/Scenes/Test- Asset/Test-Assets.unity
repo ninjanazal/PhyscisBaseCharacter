@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 25470333}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Structures
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16216
+  m_Name: pb_Mesh16212
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1105,7 +1105,7 @@ GameObject:
   - component: {fileID: 796960895}
   - component: {fileID: 796960894}
   - component: {fileID: 796960893}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ramp- 25deg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1613,7 +1613,7 @@ GameObject:
   - component: {fileID: 1157193093}
   - component: {fileID: 1157193092}
   - component: {fileID: 1157193091}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2232,7 +2232,7 @@ GameObject:
   - component: {fileID: 1335306680}
   - component: {fileID: 1335306679}
   - component: {fileID: 1335306678}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ramp- 25deg (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2514,7 +2514,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -2537,7 +2537,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16312
+  m_Name: pb_Mesh16308
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2947,7 +2947,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16256
+  m_Name: pb_Mesh16252
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3307,7 +3307,7 @@ GameObject:
   - component: {fileID: 1893803132}
   - component: {fileID: 1893803131}
   - component: {fileID: 1893803130}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5460,7 +5460,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -5580,7 +5580,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh16244
+  m_Name: pb_Mesh16240
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5970,6 +5970,11 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 0.0029967935
       objectReference: {fileID: 0}
+    - target: {fileID: 7827719029561797616, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYZDrive.positionSpring
+      value: 2000
+      objectReference: {fileID: 0}
     - target: {fileID: 8458112676552646902, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: characterAcceleration
@@ -6000,6 +6005,36 @@ PrefabInstance:
       propertyPath: m_AngularYZDrive.positionSpring
       value: 600
       objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_Anchor.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.00080303976
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -0.0051455363
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.0011080712
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYZDrive.positionDamper
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_YDrive.positionSpring
+      value: 800
+      objectReference: {fileID: 0}
     - target: {fileID: 8809834438627925715, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_Drag
@@ -6010,6 +6045,21 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: CharacterGravity.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: CharacterGravity.y
+      value: -9.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: collisionMask.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -6019,6 +6069,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: 0.0029967967
+      objectReference: {fileID: 0}
+    - target: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYZDrive.positionSpring
+      value: 2000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05e7bd4ffe02bb448b40d135a5b03bdc, type: 3}

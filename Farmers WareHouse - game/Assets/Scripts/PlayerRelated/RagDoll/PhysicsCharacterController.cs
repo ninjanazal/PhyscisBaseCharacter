@@ -18,15 +18,18 @@ public class Part
 
 public class PhysicsCharacterController : MonoBehaviour
 {
-    #region Private Vars
+    #region Vars
+    //Exposed Vars  -   -   -   -   -
     // List of parts
     [SerializeField] private List<Part> bodyParts = new List<Part>();
     public float BaseMassScale = 30f;  // Base mass Scale
     public Vector3 CharacterGravity = Vector3.down; // Custom gameobject gravity
+    public LayerMask collisionMask;     // mask for collision
 
     // referenc to the "StandUp" joint
     private ConfigurableJoint StandJoint;
     private Rigidbody mainRB;
+
     // Bool states
     public bool isStandingUp { get; private set; }
     // Behaviour
@@ -34,23 +37,11 @@ public class PhysicsCharacterController : MonoBehaviour
 
     #endregion
 
-    // On Start
-    private void Start()
-    {
-    }
-
     // Fixed Update
     private void FixedUpdate()
     {
-        // update bodyparts target rotation
-        foreach (var part in bodyParts)
-        {
-            // aply the diff to the start joint rotation
-            if (part.inverting)
-                part.partJoint.targetRotation = Quaternion.Inverse(part.partTarget.transform.localRotation);
-            else
-                part.partJoint.targetRotation = part.partTarget.transform.localRotation;
-        }
+        // Update all the parts to rotation
+        this.UpdatePartsToTarget();
         // add the gravity force 
     }
 
@@ -126,7 +117,9 @@ public class PhysicsCharacterController : MonoBehaviour
         // if so aply the motion
         // Draw the debug line
         Debug.DrawLine(this.transform.position, this.transform.position + direction);
-        mainRB.AddForce(direction, ForceMode.Impulse);
+        
+        // add fore to the rb
+        mainRB.AddForce(MovementForceCalculation(), ForceMode.Impulse);
 
         // keep the maximum velocity inside range
         if (GetCurrentVelocity > maxVelocity)
@@ -170,11 +163,48 @@ public class PhysicsCharacterController : MonoBehaviour
     public float GetCurrentVelocity { get { return mainRB.velocity.magnitude; } }
     #endregion
 
+    #region Private Methods
+    // Update all the dynamic rag rotation to target
+    void UpdatePartsToTarget()
+    {
+        // update bodyparts target rotation
+        foreach (var part in bodyParts)
+        {
+            // aply the diff to the start joint rotation
+            if (part.inverting)
+                part.partJoint.targetRotation = Quaternion.Inverse(part.partTarget.transform.localRotation);
+            else
+                part.partJoint.targetRotation = part.partTarget.transform.localRotation;
+        }
+    }
+
+    // MOVEMENT 
+    /// <summary>
+    /// Evaluate the correct force to be added
+    /// </summary>
+    private Vector3 MovementForceCalculation()
+    {
+        // calculate the correct movement force based on the ground slope
+        // get the current ground location normal
+        return Vector3.zero;
+    }
+
     // Debug information
     private void OnDrawGizmos()
+    {
+        // Draw the movement direction
+        DrawCurrenteMoveTarget();
+    }
+
+    /// <summary>
+    /// Draw the current movement direction
+    /// </summary>
+    private void DrawCurrenteMoveTarget()
     {
         // Draw Forward
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(this.transform.position, this.transform.position + this.transform.forward * 2f);
     }
+
+    #endregion
 }

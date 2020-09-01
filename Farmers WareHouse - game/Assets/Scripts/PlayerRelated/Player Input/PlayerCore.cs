@@ -39,7 +39,6 @@ public class PlayerCore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // Update Animator State
         UpdateAnimator();
     }
