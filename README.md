@@ -1,9 +1,7 @@
 # farmers_warehouse_game
 Game that joins farming and warehouse workd. Need to fill orders in the warehouse, buid the pallets and ship it, but before you need to gathering those itens (Android &amp; ~Pc)
 (This may turn into a funny physics base game, with the faming and warehouse manegement)
-## Time Line
-
-【▋░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░|
+|
 # Base Model
 Base character model, with bones and painted influence
 * [x] Start base model
@@ -18,6 +16,9 @@ Base character model, with bones and painted influence
 * [ ] Active ragdoll response to player input
 	- * [x] Horizontal movement
 		- * [x] Correct player rotate to direction
+	- * [x] Slope Movement
+	- * [x] Gravity implementation
+	- * [ ] Jumping
 	- * [ ] Player action response
 		- [ ] Grab/Drag Objects
 
@@ -28,8 +29,7 @@ Base character model, with bones and painted influence
 
 # Dev Notes
 - Current notes
-	- Implement player move on inclined surfaces
-	- Slop implementation
+	- Stairs movement
 
 # Development ScreenShots
 ### Basing ragdol movement 
