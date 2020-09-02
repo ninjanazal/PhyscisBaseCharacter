@@ -579,6 +579,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!153 &603933102 stripped
+ConfigurableJoint:
+  m_CorrespondingSourceObject: {fileID: 7827719029561797616, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+    type: 3}
+  m_PrefabInstance: {fileID: 8809834437610878324}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &627690354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,6 +1440,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!153 &835226702 stripped
+ConfigurableJoint:
+  m_CorrespondingSourceObject: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+    type: 3}
+  m_PrefabInstance: {fileID: 8809834437610878324}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &883504801
 GameObject:
   m_ObjectHideFlags: 0
@@ -5880,6 +5892,16 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: -0.0000000039581214
       objectReference: {fileID: 0}
+    - target: {fileID: 5317745083048166897, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_HighAngularXLimit.limit
+      value: 9.159205
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317745083048166897, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularXDrive.positionSpring
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 5688585809816841778, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -6045,6 +6067,11 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925715, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: CharacterGravity.x
@@ -6063,8 +6090,18 @@ PrefabInstance:
     - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: groundTestsize
-      value: 0.15
+      value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: bodyParts.Array.data[0].partJoint
+      value: 
+      objectReference: {fileID: 835226702}
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: bodyParts.Array.data[1].partJoint
+      value: 
+      objectReference: {fileID: 603933102}
     - target: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_ConnectedAnchor.y

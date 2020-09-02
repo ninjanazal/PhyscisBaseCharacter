@@ -41,14 +41,14 @@ public class PhysicsCharacterController : MonoBehaviour
     private Rigidbody mainRB;
 
     // Bool states
-    public bool isStandingUp { get; private set; }
+    public bool IsStandingUp { get; private set; }
     // Behaviour
     private float maxVelocity = 0f;
 
     //Ground collision information
     public float groundTestsize = 0.3f;
     private RayOutInfo tempRayInfo = new RayOutInfo { collided = false };
-
+    private CapsuleCollider targetSphereCollider;   // reff to the target controller sphere coll
     #endregion
 
     // Fixed Update
@@ -59,13 +59,15 @@ public class PhysicsCharacterController : MonoBehaviour
         // add the gravity force 
     }
 
+
+    #region Pulbic Methods
     /// <summary>
     /// Collect data from the main objects, get the joint and check if have a valid target
     /// </summary>
     public void InitParts()
     {
         // Setting to the stangin pos
-        isStandingUp = true;
+        IsStandingUp = true;
 
         // stores the reference for the standoUp Joint
         StandJoint = GetComponent<ConfigurableJoint>();
@@ -74,6 +76,8 @@ public class PhysicsCharacterController : MonoBehaviour
         mainRB = GetComponent<Rigidbody>();
         // change the current gravity
         mainRB.useGravity = false;
+        // store a reference to the capsule colide
+        this.targetSphereCollider = this.GetComponent<CapsuleCollider>();
 
         // evaluate all the elements in list
         foreach (var bPart in bodyParts)
@@ -110,8 +114,8 @@ public class PhysicsCharacterController : MonoBehaviour
     public void Switchstanding()
     {
         // invert the state
-        if (isStandingUp) { isStandingUp = false; StandJoint.connectedMassScale = 0f; }
-        else { isStandingUp = true; StandJoint.connectedMassScale = BaseMassScale; }
+        if (IsStandingUp) { IsStandingUp = false; StandJoint.connectedMassScale = 0f; }
+        else { IsStandingUp = true; StandJoint.connectedMassScale = BaseMassScale; }
     }
 
     /// <summary>
@@ -158,7 +162,25 @@ public class PhysicsCharacterController : MonoBehaviour
         // negative velocitu
         mainRB.AddForce(-new Vector3(mainRB.velocity.x, 0f, mainRB.velocity.z) * value, ForceMode.Impulse);
     }
+    #endregion
 
+
+
+    #region Getters
+    /// <summary>
+    /// Get The physics forward
+    /// </summary>
+    /// <return>Return the vector forward</return>
+    public Vector3 GetPhysicsForward { get { return this.transform.forward; } }
+    /// <summary>
+    /// Get the current gameVelocity
+    /// </summary>
+    public float GetCurrentVelocity { get { return mainRB.velocity.magnitude; } }
+    #endregion
+
+
+
+    #region Private Methods
     /// <summary>
     /// Orient the player based on velocity direction
     /// </summary>
@@ -172,21 +194,12 @@ public class PhysicsCharacterController : MonoBehaviour
                 Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(value, Vector3.up), angularVel);
     }
 
-    #region Getters
-    /// <summary>
-    /// Get The physics forward
-    /// </summary>
-    /// <return>Return the vector forward</return>
-    public Vector3 GetPhysicsForward { get { return this.transform.forward; } }
-    public float GetCurrentVelocity { get { return mainRB.velocity.magnitude; } }
-    #endregion
-
-    #region Private Methods
     // Update all the dynamic rag rotation to target
     void UpdatePartsToTarget()
     {
         // correct gravity
-        if (GroundCheck().collided == false)    // if not on the ground, add gravity
+        this.tempRayInfo = GroundCheck();   // save the current groundCheck state
+        if (!this.tempRayInfo.collided)    // if not on the ground, add gravity
             this.mainRB.AddForce(CharacterGravity, ForceMode.Impulse); // add gravity        
 
 
@@ -226,7 +239,7 @@ public class PhysicsCharacterController : MonoBehaviour
     private RayOutInfo GroundCheck()
     {
         // evaluate if the player is grounded
-        Ray tempRay = new Ray(this.transform.position, Vector3.down);
+        Ray tempRay = new Ray(this.targetSphereCollider.transform.position + this.targetSphereCollider.center, Vector3.down);
 
         // check for collisions for the ground
         if (Physics.SphereCast(tempRay, this.groundTestsize, out RaycastHit tempHitInfo, 3f * this.groundTestsize, collisionMask))
@@ -236,6 +249,8 @@ public class PhysicsCharacterController : MonoBehaviour
         return new RayOutInfo() { collided = false };
     }
 
+
+    // GIZMOS   -   -   -   -   -
     // Debug information
     private void OnDrawGizmos()
     {
@@ -254,7 +269,7 @@ public class PhysicsCharacterController : MonoBehaviour
 
         // ground area
         Gizmos.color = tempRayInfo.collided ? Color.green : Color.red;  // color based on groundedState
-        Gizmos.DrawWireSphere(this.transform.position, this.groundTestsize);
+        if (this.targetSphereCollider) Gizmos.DrawWireSphere(this.targetSphereCollider.transform.position + this.targetSphereCollider.center, this.groundTestsize);
 
         // draw grounded info
         if (tempRayInfo.collided)

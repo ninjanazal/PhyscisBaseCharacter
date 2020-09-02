@@ -42,31 +42,31 @@ public class PhysicsCharacterControllerEditor : Editor
         // Draw the name of the Script
         EditorGUILayout.LabelField("Physics Base Controller!", EditorStyles.boldLabel);
         EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, 1f), Color.black); // Draw line based on with
-        EditorGUILayout.Space(5f);  // spaec
+        EditorGUILayout.Space(20f);  // spaec
 
 
         // Base StandUp mass Scale
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
         EditorGUILayout.LabelField("Base StandUp Joint Mass Scale", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(baseMass);
-        EditorGUILayout.Space(10f);
-
-        // Colision mask
-        EditorGUILayout.LabelField("Collision Mask", EditorStyles.boldLabel);
-        // display the dropDown, no lable
-        EditorGUILayout.PropertyField(collisionMask, new GUIContent());
-        EditorGUILayout.Space(10f);
+        EditorGUILayout.Space(5f);
 
         // Ground check value
         EditorGUILayout.LabelField("Ground Check Threshold", EditorStyles.boldLabel);
-        EditorGUILayout.Slider(groundCheckThreshold,0f,1f);
-        EditorGUILayout.Space(10f);
+        EditorGUILayout.Slider(groundCheckThreshold, .1f, .3f, new GUIContent());
+        EditorGUILayout.Space(5f);
 
 
         // Gravity value
         EditorGUILayout.LabelField("Character gravity value", EditorStyles.boldLabel);
         EditorGUILayout.PropertyField(playerGravity, new GUIContent());
         EditorGUILayout.EndVertical();
+        EditorGUILayout.Space(10f);
+
+        // Colision mask
+        EditorGUILayout.LabelField("Collision Mask", EditorStyles.boldLabel);
+        // display the dropDown, no lable
+        EditorGUILayout.PropertyField(collisionMask, new GUIContent());
         EditorGUILayout.Space(10f);
 
         // Info label
