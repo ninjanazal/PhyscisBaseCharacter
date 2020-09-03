@@ -225,10 +225,16 @@ public class PhysicsCharacterController : MonoBehaviour
         // calculate the direction of motion based on slop normal
         // Calculate the move direction based on the surface normal
         Vector3 calculateForce = Quaternion.FromToRotation(this.transform.up, colInfo.collisionNormal) *
-            ((1f - Vector3.Dot(colInfo.collisionNormal, -this.transform.right)) * moveDirection);
+            ((1f - Vector3.Dot(colInfo.collisionNormal.normalized, -this.transform.right)) * moveDirection);
 
         // Debug force
         Debug.DrawLine(this.transform.position, this.transform.position + calculateForce, Color.cyan);
+
+        // DRIFT PREVENTING -   -   -   -   -
+        // add counter force for preventing drift
+        //calculateForce += Vector3.Reflect(-mainRB.velocity, calculateForce).normalized *
+        //    Vector3.Dot(mainRB.velocity.normalized, calculateForce);
+
         // Return the calculate vector
         return calculateForce;
     }
