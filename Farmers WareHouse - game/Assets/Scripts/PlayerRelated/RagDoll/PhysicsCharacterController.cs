@@ -35,6 +35,7 @@ public class PhysicsCharacterController : MonoBehaviour
     public float BaseMassScale = 30f;  // Base mass Scale
     public Vector3 CharacterGravity = Vector3.down; // Custom gameobject gravity
     public LayerMask collisionMask;     // mask for collision
+    public float driftPrevention = 0f;  // preventing character from drifting
 
     // referenc to the "StandUp" joint
     private ConfigurableJoint StandJoint;
@@ -158,13 +159,11 @@ public class PhysicsCharacterController : MonoBehaviour
     public void DragInput(float value)
     {
         // check if righid body exists
-        if (!mainRB) return;
+        if (!mainRB || !tempRayInfo.collided) return;
         // negative velocitu
-        mainRB.AddForce(-new Vector3(mainRB.velocity.x, 0f, mainRB.velocity.z) * value, ForceMode.Impulse);
+        mainRB.AddForce(-new Vector3(mainRB.velocity.x, 0f, mainRB.velocity.z) * (mainRB.mass * value), ForceMode.Impulse);
     }
     #endregion
-
-
 
     #region Getters
     /// <summary>
@@ -177,8 +176,6 @@ public class PhysicsCharacterController : MonoBehaviour
     /// </summary>
     public float GetCurrentVelocity { get { return mainRB.velocity.magnitude; } }
     #endregion
-
-
 
     #region Private Methods
     /// <summary>
@@ -199,6 +196,7 @@ public class PhysicsCharacterController : MonoBehaviour
     {
         // correct gravity
         this.tempRayInfo = GroundCheck();   // save the current groundCheck state
+
         if (!this.tempRayInfo.collided)    // if not on the ground, add gravity
             this.mainRB.AddForce(CharacterGravity, ForceMode.Impulse); // add gravity        
 
@@ -224,17 +222,14 @@ public class PhysicsCharacterController : MonoBehaviour
         //SLOPE  -   -   -   -   -
         // calculate the direction of motion based on slop normal
         // Calculate the move direction based on the surface normal
-        Vector3 calculateForce = Quaternion.FromToRotation(this.transform.up, colInfo.collisionNormal) *
-            ((1f - Vector3.Dot(colInfo.collisionNormal.normalized, -this.transform.right)) * moveDirection);
+        Vector3 calculateForce = Quaternion.FromToRotation(this.transform.up, colInfo.collisionNormal) * moveDirection;
+
+        // Drift compensation
+        calculateForce *= Mathf.Clamp((1f - Math.Abs(Vector3.Dot(calculateForce.normalized, mainRB.velocity.normalized))) * mainRB.mass * this.driftPrevention
+            , 1f, mainRB.mass);
 
         // Debug force
         Debug.DrawLine(this.transform.position, this.transform.position + calculateForce, Color.cyan);
-
-        // DRIFT PREVENTING -   -   -   -   -
-        // add counter force for preventing drift
-        //calculateForce += Vector3.Reflect(-mainRB.velocity, calculateForce).normalized *
-        //    Vector3.Dot(mainRB.velocity.normalized, calculateForce);
-
         // Return the calculate vector
         return calculateForce;
     }

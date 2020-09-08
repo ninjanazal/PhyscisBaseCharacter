@@ -9,6 +9,7 @@ public class PhysicsCharacterControllerEditor : Editor
     SerializedProperty partList, baseMass;
     SerializedProperty playerGravity, collisionMask;
     SerializedProperty groundCheckThreshold;
+    SerializedProperty driftPrevention;
 
     //ON enable
     private void OnEnable()
@@ -19,6 +20,7 @@ public class PhysicsCharacterControllerEditor : Editor
         playerGravity = serializedObject.FindProperty("CharacterGravity");  // Gravity value
         collisionMask = serializedObject.FindProperty("collisionMask");     // collision Mask
         groundCheckThreshold = serializedObject.FindProperty("groundTestsize"); // value for the ground detection threshold
+        driftPrevention = serializedObject.FindProperty("driftPrevention"); // value for the drift prevention
     }
 
     // on inspector GUIO
@@ -56,6 +58,10 @@ public class PhysicsCharacterControllerEditor : Editor
         EditorGUILayout.Slider(groundCheckThreshold, .1f, .3f, new GUIContent());
         EditorGUILayout.Space(5f);
 
+        // Drift prevention
+        EditorGUILayout.LabelField("Drift prevention value", EditorStyles.boldLabel);
+        EditorGUILayout.Slider(driftPrevention, 0f, 1f, new GUIContent());
+        EditorGUILayout.Space(5f);
 
         // Gravity value
         EditorGUILayout.LabelField("Character gravity value", EditorStyles.boldLabel);
@@ -63,8 +69,10 @@ public class PhysicsCharacterControllerEditor : Editor
         EditorGUILayout.EndVertical();
         EditorGUILayout.Space(10f);
 
+
         // Colision mask
         EditorGUILayout.LabelField("Collision Mask", EditorStyles.boldLabel);
+
         // display the dropDown, no lable
         EditorGUILayout.PropertyField(collisionMask, new GUIContent());
         EditorGUILayout.Space(10f);
