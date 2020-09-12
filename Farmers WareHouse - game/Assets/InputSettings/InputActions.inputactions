@@ -12,6 +12,14 @@
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Jump",
+                    "type": "Button",
+                    "id": "b9b1659c-9359-4d76-adca-7be8c2287416",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -104,7 +112,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
+                    "name": "right",
                     "id": "822f7e1c-5ee5-4329-9e0c-313346d7f673",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
@@ -115,7 +123,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
+                    "name": "left",
                     "id": "5d49ce25-87c9-44ef-85db-515a9d9ff06e",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
@@ -133,6 +141,17 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8056fc83-a5b0-436b-93be-d14633adff41",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

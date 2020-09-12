@@ -16,6 +16,7 @@ public class PlayerCore : MonoBehaviour
 
     // input value
     private Vector2 inputAmount = Vector2.zero;
+    //private bool jumpCall = false;  // value to call the jump function
     public bool stunted { get; private set; }
 
     // Exposed Vars
@@ -24,14 +25,15 @@ public class PlayerCore : MonoBehaviour
     [Tooltip("Character base angular acceleration")] public float characterAngularAcceleration = 5f;
     [Tooltip("Character max velocity")] public float characterMaxVelocity = 0f;
     [Tooltip("Active drag"), Range(0f, 1f)] public float activeDrag = 0.25f;
+    [Tooltip("Jump force based on mass"), Range(2f, 3f)] public float JumpValue = .8f;
 
     [Header("Animation Controls")]
-    [Tooltip("Walking animation based on current speed"), Range(0f, 1f)] public float animationSpeedInfluence = 0.2f; 
+    [Tooltip("Walking animation based on current speed"), Range(0f, 1f)] public float animationSpeedInfluence = 0.2f;
     // Start is called before the first frame update
     void Start()
     {
-        InitInput();        // Initialize the input 
         InitController();   // Initialize this controller
+        InitInput();        // Initialize the input 
     }
 
     // Update is called once per frame
@@ -65,6 +67,10 @@ public class PlayerCore : MonoBehaviour
         // we release
         inputController.PlayerLocomotion.Movement.canceled +=
             _ => inputAmount = Vector2.zero;
+        // jumpr input
+        inputController.PlayerLocomotion.Jump.performed +=
+           ctx => physicsCharacter.Jump(JumpValue);
+
         // enable
         SetControls(true);
 
@@ -121,7 +127,6 @@ public class PlayerCore : MonoBehaviour
         // update the moving bool
         playerTargetAnimator.SetBool("IsMoving", physicsCharacter.GetCurrentVelocity > 0.1f);
         playerTargetAnimator.SetFloat("WalkingSpeed", physicsCharacter.GetCurrentVelocity * animationSpeedInfluence);
-
     }
     #endregion
 
@@ -132,10 +137,9 @@ public class PlayerCore : MonoBehaviour
     /// <param name="value">State to set</param>
     public void SetControls(bool value)
     {
-        if (value)
-            inputController.PlayerLocomotion.Enable();
-        else
-            inputController.PlayerLocomotion.Disable();
+        // Enable or disable the the input actions
+        if (value) inputController.PlayerLocomotion.Enable();
+        else inputController.PlayerLocomotion.Disable();
     }
 
     /// <summary>

@@ -163,6 +163,19 @@ public class PhysicsCharacterController : MonoBehaviour
         // negative velocitu
         mainRB.AddForce(-new Vector3(mainRB.velocity.x, 0f, mainRB.velocity.z) * (mainRB.mass * value), ForceMode.Impulse);
     }
+
+    /// <summary>
+    /// Function called for jumping
+    /// </summary>
+    /// <param name="force">Jumping force</param>
+    public void Jump(float force)
+    {
+        // check if the player is grounded
+        if (!tempRayInfo.collided) return;
+
+        // if grounded add force based on the force
+        mainRB.AddForce(Vector3.up * (float)Math.Pow(mainRB.mass, force), ForceMode.Impulse);
+    }
     #endregion
 
     #region Getters

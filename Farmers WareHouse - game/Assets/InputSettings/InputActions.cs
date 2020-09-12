@@ -25,6 +25,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9b1659c-9359-4d76-adca-7be8c2287416"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -117,7 +125,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
+                    ""name"": ""right"",
                     ""id"": ""822f7e1c-5ee5-4329-9e0c-313346d7f673"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
@@ -128,7 +136,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
+                    ""name"": ""left"",
                     ""id"": ""5d49ce25-87c9-44ef-85db-515a9d9ff06e"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
@@ -146,6 +154,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8056fc83-a5b0-436b-93be-d14633adff41"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -180,6 +199,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         // PlayerLocomotion
         m_PlayerLocomotion = asset.FindActionMap("PlayerLocomotion", throwIfNotFound: true);
         m_PlayerLocomotion_Movement = m_PlayerLocomotion.FindAction("Movement", throwIfNotFound: true);
+        m_PlayerLocomotion_Jump = m_PlayerLocomotion.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -230,11 +250,13 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputActionMap m_PlayerLocomotion;
     private IPlayerLocomotionActions m_PlayerLocomotionActionsCallbackInterface;
     private readonly InputAction m_PlayerLocomotion_Movement;
+    private readonly InputAction m_PlayerLocomotion_Jump;
     public struct PlayerLocomotionActions
     {
         private @InputActions m_Wrapper;
         public PlayerLocomotionActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_PlayerLocomotion_Movement;
+        public InputAction @Jump => m_Wrapper.m_PlayerLocomotion_Jump;
         public InputActionMap Get() { return m_Wrapper.m_PlayerLocomotion; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -247,6 +269,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayerLocomotionActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerLocomotionActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerLocomotionActionsCallbackInterface.OnMovement;
+                @Jump.started -= m_Wrapper.m_PlayerLocomotionActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerLocomotionActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerLocomotionActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_PlayerLocomotionActionsCallbackInterface = instance;
             if (instance != null)
@@ -254,6 +279,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -279,5 +307,6 @@ public class @InputActions : IInputActionCollection, IDisposable
     public interface IPlayerLocomotionActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }
