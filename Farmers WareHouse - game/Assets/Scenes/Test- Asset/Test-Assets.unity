@@ -908,12 +908,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!153 &603933102 stripped
-ConfigurableJoint:
-  m_CorrespondingSourceObject: {fileID: 7827719029561797616, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-    type: 3}
-  m_PrefabInstance: {fileID: 8809834437610878324}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &627690354
 GameObject:
   m_ObjectHideFlags: 0
@@ -2081,12 +2075,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!153 &835226702 stripped
-ConfigurableJoint:
-  m_CorrespondingSourceObject: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-    type: 3}
-  m_PrefabInstance: {fileID: 8809834437610878324}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &883504801
 GameObject:
   m_ObjectHideFlags: 0
@@ -6324,71 +6312,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 13400000, guid: 4a494e59be2d60a4fa25f1d13d83989b,
         type: 2}
-    - target: {fileID: 1110063136673927916, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: -0.000000016763813
-      objectReference: {fileID: 0}
-    - target: {fileID: 1110063136673927916, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.013047631
-      objectReference: {fileID: 0}
-    - target: {fileID: 1110063136673927916, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: 0.0000000060535994
-      objectReference: {fileID: 0}
-    - target: {fileID: 3132384183197433397, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: -3.4472977e-10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3132384183197433397, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.022687202
-      objectReference: {fileID: 0}
-    - target: {fileID: 3132384183197433397, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: -0.0014459006
-      objectReference: {fileID: 0}
-    - target: {fileID: 5317745083048166897, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: -9.992007e-16
-      objectReference: {fileID: 0}
-    - target: {fileID: 5317745083048166897, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.008172
-      objectReference: {fileID: 0}
-    - target: {fileID: 5317745083048166897, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: -0.0000000039581214
-      objectReference: {fileID: 0}
-    - target: {fileID: 5317745083048166897, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_HighAngularXLimit.limit
-      value: 9.159205
-      objectReference: {fileID: 0}
-    - target: {fileID: 5317745083048166897, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_AngularXDrive.positionSpring
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 5688585809816841778, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: -0.0000000015133989
-      objectReference: {fileID: 0}
-    - target: {fileID: 5688585809816841778, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.013047634
-      objectReference: {fileID: 0}
     - target: {fileID: 6229371028899037595, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6444,160 +6367,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6553009303701199835, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: 0.000000003725289
-      objectReference: {fileID: 0}
-    - target: {fileID: 6553009303701199835, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: -3.4924588e-10
-      objectReference: {fileID: 0}
     - target: {fileID: 6717395228272319265, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_Name
       value: Player_Controller
       objectReference: {fileID: 0}
-    - target: {fileID: 7827719029561797616, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: -0.007701112
-      objectReference: {fileID: 0}
-    - target: {fileID: 7827719029561797616, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: 0.0029967935
-      objectReference: {fileID: 0}
-    - target: {fileID: 7827719029561797616, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_AngularYZDrive.positionSpring
-      value: 2000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8458112676552646902, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: characterAcceleration
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8458112676552646902, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: activeDrag
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 8458112676552646902, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: animationSpeedInfluence
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8458112676552646902, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: characterMaxVelocity
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8458112676552646902, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: characterAngularAcceleration
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_AngularYZDrive.positionSpring
-      value: 600
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_Anchor.y
+      propertyPath: bodyParts.Array.data[1].inverting
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: 0.00080303976
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: -0.0051455363
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: -0.0011080712
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_AngularYZDrive.positionDamper
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925713, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_YDrive.positionSpring
-      value: 800
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925715, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_Drag
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925715, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925715, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: CharacterGravity.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: CharacterGravity.y
-      value: -9.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: collisionMask.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: groundTestsize
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: bodyParts.Array.data[0].partJoint
-      value: 
-      objectReference: {fileID: 835226702}
-    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: bodyParts.Array.data[1].partJoint
-      value: 
-      objectReference: {fileID: 603933102}
-    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: driftPrevention
-      value: 0.803
-      objectReference: {fileID: 0}
-    - target: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: -0.007701111
-      objectReference: {fileID: 0}
-    - target: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: 0.0029967967
-      objectReference: {fileID: 0}
-    - target: {fileID: 8926548004057944239, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
-        type: 3}
-      propertyPath: m_AngularYZDrive.positionSpring
-      value: 2000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05e7bd4ffe02bb448b40d135a5b03bdc, type: 3}
