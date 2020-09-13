@@ -132,7 +132,7 @@ public class PhysicsCharacterController : MonoBehaviour
     public void Move(Vector3 direction, float angularVel)
     {
         // temp collision information
-        tempRayInfo = GroundCheck();
+        //tempRayInfo = GroundCheck();
 
         //  check if the main rigid body exists
         if (!mainRB || !tempRayInfo.collided) return;
@@ -253,10 +253,10 @@ public class PhysicsCharacterController : MonoBehaviour
     private RayOutInfo GroundCheck()
     {
         // evaluate if the player is grounded
-        Ray tempRay = new Ray(this.targetSphereCollider.transform.position + this.targetSphereCollider.center, Vector3.down);
+        Ray tempRay = new Ray(this.transform.TransformPoint(this.targetSphereCollider.center), Vector3.down);
 
         // check for collisions for the ground
-        if (Physics.SphereCast(tempRay, this.groundTestsize, out RaycastHit tempHitInfo, 3f * this.groundTestsize, collisionMask))
+        if (Physics.SphereCast(tempRay, this.targetSphereCollider.radius * 0.85f, out RaycastHit tempHitInfo, 3f * this.groundTestsize, collisionMask))
             return new RayOutInfo()
             { collided = true, collisionNormal = tempHitInfo.normal, collisionPoint = tempHitInfo.point };    // if collided with ground
         // if not
@@ -283,7 +283,8 @@ public class PhysicsCharacterController : MonoBehaviour
 
         // ground area
         Gizmos.color = tempRayInfo.collided ? Color.green : Color.red;  // color based on groundedState
-        if (this.targetSphereCollider) Gizmos.DrawWireSphere(this.targetSphereCollider.transform.position + this.targetSphereCollider.center, this.groundTestsize);
+        if (this.targetSphereCollider)
+            Gizmos.DrawWireSphere(this.transform.TransformPoint(this.targetSphereCollider.center), this.targetSphereCollider.radius * 0.85f);
 
         // draw grounded info
         if (tempRayInfo.collided)

@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerCore : MonoBehaviour
 {
@@ -11,7 +10,6 @@ public class PlayerCore : MonoBehaviour
 
     // Internel vars
     // ref to input controller
-    private InputActions inputController;
     private CameraController cameraController;
 
     // input value
@@ -33,7 +31,6 @@ public class PlayerCore : MonoBehaviour
     void Start()
     {
         InitController();   // Initialize this controller
-        InitInput();        // Initialize the input 
     }
 
     // Update is called once per frame
@@ -54,27 +51,6 @@ public class PlayerCore : MonoBehaviour
     }
 
     #region Internal Methods
-    /// <summary>
-    /// Initialize the controller with movement configured
-    /// </summary>
-    private void InitInput()
-    {
-        inputController = new InputActions();
-
-        // regist input
-        inputController.PlayerLocomotion.Movement.performed +=
-            ctx => inputAmount = ctx.ReadValue<Vector2>(); ;
-        // we release
-        inputController.PlayerLocomotion.Movement.canceled +=
-            _ => inputAmount = Vector2.zero;
-        // jumpr input
-        inputController.PlayerLocomotion.Jump.performed +=
-           ctx => physicsCharacter.Jump(JumpValue);
-
-        // enable
-        SetControls(true);
-
-    }
 
     /// <summary>
     /// initial setup of this controller
@@ -99,6 +75,9 @@ public class PlayerCore : MonoBehaviour
 
         // init vars
         stunted = false;
+
+        // Regists for jump delegate
+        InputManager.Instance.jumpDelegate += () => { physicsCharacter.Jump(this.JumpValue); };
     }
 
     /// <summary>
@@ -106,6 +85,12 @@ public class PlayerCore : MonoBehaviour
     /// </summary>
     private void InputPhysicsResponse()
     {
+        // check if exist a input manager
+        if (InputManager.Instance == null) return;
+
+        // Get the input vector
+        inputAmount = InputManager.Instance.GetInputVector();
+
         // if exists motin to be apllied to the rb
         if (inputAmount != Vector2.zero)
             // move the p+layer
@@ -131,16 +116,6 @@ public class PlayerCore : MonoBehaviour
     #endregion
 
     #region Public Methods
-    /// <summary>
-    /// Define the state for the input responce
-    /// </summary>
-    /// <param name="value">State to set</param>
-    public void SetControls(bool value)
-    {
-        // Enable or disable the the input actions
-        if (value) inputController.PlayerLocomotion.Enable();
-        else inputController.PlayerLocomotion.Disable();
-    }
 
     /// <summary>
     /// Set the camera controller
@@ -149,12 +124,7 @@ public class PlayerCore : MonoBehaviour
     {
         get => cameraController;
         // Custom set
-        set
-        {
-            cameraController = value;
-            // if null deactivate
-            SetControls(cameraController ? true : false);
-        }
+        set { cameraController = value; }
     }
     #endregion
 }
