@@ -18,14 +18,13 @@ Base character model, with bones and painted influence
 - [x] Base mesh on basic ragdoll
   - - [x] Configurable joint set
 - [x] Movement to active ragdoll
-- [ ] Active ragdoll response to player input
+- [x] Active ragdoll response to player input
   - - [x] Horizontal movement
-    * - [x] Correct player rotate to direction
+      - - [x] Correct player rotate to direction
   - - [x] Slope Movement
   - - [x] Gravity implementation
   - - [x] Jumping
-
-* - [x] Player Stunt response
+  - - [x] Player Stunt response
   - - [ ] Player action response
     * - [ ] Grab/Drag Objects
 
