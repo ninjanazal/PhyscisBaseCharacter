@@ -22,7 +22,7 @@ public class PlayerCore : MonoBehaviour
     [Header("Character Configuration")]
     [Header("Player State")]
     [Tooltip("Character Stunted time")] public float stuntedTime = 2f;
-    [Tooltip("Character kill velocity when falling"), Range(10f, 40f)] public float killVelocity = 12f;
+    [Tooltip("Character kill velocity when falling"), Range(25f, 50f)] public float killVelocity = 25f;
     [Header("Character physic values")]
     [Tooltip("Character base acceleration")] public float characterAcceleration = 200f;
     [Tooltip("Character base angular acceleration")] public float characterAngularAcceleration = 5f;
