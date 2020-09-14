@@ -42,14 +42,22 @@ public class PhysicsCharacterController : MonoBehaviour
     private Rigidbody mainRB;
 
     // Bool states
-    public bool IsStandingUp { get; private set; }
+    public bool IsStunted { get; private set; }
     // Behaviour
     private float maxVelocity = 0f;
+    private float killVelocity = 0f;
 
     //Ground collision information
     public float groundTestsize = 0.3f;
     private RayOutInfo tempRayInfo = new RayOutInfo { collided = false };
     private CapsuleCollider targetSphereCollider;   // reff to the target controller sphere coll
+    #endregion
+
+    #region Events
+    // Stunted delegate and event
+    public delegate void OnStuntedDelegate();
+    public event OnStuntedDelegate stuntedDelegate;
+
     #endregion
 
     // Fixed Update
@@ -68,7 +76,7 @@ public class PhysicsCharacterController : MonoBehaviour
     public void InitParts()
     {
         // Setting to the stangin pos
-        IsStandingUp = true;
+        IsStunted = false;
 
         // stores the reference for the standoUp Joint
         StandJoint = GetComponent<ConfigurableJoint>();
@@ -115,8 +123,8 @@ public class PhysicsCharacterController : MonoBehaviour
     public void Switchstanding()
     {
         // invert the state
-        if (IsStandingUp) { IsStandingUp = false; StandJoint.connectedMassScale = 0f; }
-        else { IsStandingUp = true; StandJoint.connectedMassScale = BaseMassScale; }
+        if (!IsStunted) { IsStunted = true; StandJoint.connectedMassScale = 0f; }
+        else { IsStunted = false; StandJoint.connectedMassScale = BaseMassScale; }
     }
 
     /// <summary>
@@ -125,15 +133,18 @@ public class PhysicsCharacterController : MonoBehaviour
     /// <param name="value">Velocity</param>
     public void SetCharacterMaxSpeed(float value) { maxVelocity = value; }
 
+    /// <Summary>
+    /// set the kill fall velocity on the physics controller
+    /// </Summary>
+    /// <param name="value"> Kill velocity value </param>
+    public void SetCharacterKillVelocity(float value) { killVelocity = value; }
+
     /// <summary>
     /// Apply motion to this rigid body
     /// </summary>
     /// <param name="direction">Target Motion</param>
     public void Move(Vector3 direction, float angularVel)
     {
-        // temp collision information
-        //tempRayInfo = GroundCheck();
-
         //  check if the main rigid body exists
         if (!mainRB || !tempRayInfo.collided) return;
 
@@ -211,7 +222,11 @@ public class PhysicsCharacterController : MonoBehaviour
         this.tempRayInfo = GroundCheck();   // save the current groundCheck state
 
         if (!this.tempRayInfo.collided)    // if not on the ground, add gravity
-            this.mainRB.AddForce(CharacterGravity, ForceMode.Impulse); // add gravity        
+            this.mainRB.AddForce(CharacterGravity, ForceMode.Impulse); // add gravity      
+        // check if the player fall killed the player  
+        else if (killVelocity != 0f && Math.Abs(this.mainRB.velocity.y) >= killVelocity && this.tempRayInfo.collided)
+            // the player should be stunted
+            stuntedDelegate();
 
 
         // update bodyparts target rotation
@@ -235,10 +250,13 @@ public class PhysicsCharacterController : MonoBehaviour
         //SLOPE  -   -   -   -   -
         // calculate the direction of motion based on slop normal
         // Calculate the move direction based on the surface normal
-        Vector3 calculateForce = Quaternion.FromToRotation(this.transform.up, colInfo.collisionNormal) * moveDirection;
+        // the velocity is manipulated by the inclination
+        Vector3 calculateForce = Quaternion.FromToRotation(this.transform.up, colInfo.collisionNormal) * (moveDirection *
+            Vector3.Dot(colInfo.collisionNormal, Vector3.up));
 
         // Drift compensation
-        calculateForce *= Mathf.Clamp((1f - Math.Abs(Vector3.Dot(calculateForce.normalized, mainRB.velocity.normalized))) * mainRB.mass * this.driftPrevention
+        calculateForce *= Mathf.Clamp((1f - Math.Abs(Vector3.Dot(calculateForce.normalized, mainRB.velocity.normalized)))
+         * mainRB.mass * this.driftPrevention
             , 1f, mainRB.mass);
 
         // Debug force

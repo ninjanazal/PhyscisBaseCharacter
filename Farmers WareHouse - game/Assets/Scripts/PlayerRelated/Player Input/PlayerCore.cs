@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerCore : MonoBehaviour
 {
@@ -14,11 +15,15 @@ public class PlayerCore : MonoBehaviour
 
     // input value
     private Vector2 inputAmount = Vector2.zero;
-    //private bool jumpCall = false;  // value to call the jump function
-    public bool stunted { get; private set; }
+    // Is the player stunted
+    private bool stunted;
 
     // Exposed Vars
     [Header("Character Configuration")]
+    [Header("Player State")]
+    [Tooltip("Character Stunted time")] public float stuntedTime = 2f;
+    [Tooltip("Character kill velocity when falling"), Range(10f, 40f)] public float killVelocity = 12f;
+    [Header("Character physic values")]
     [Tooltip("Character base acceleration")] public float characterAcceleration = 200f;
     [Tooltip("Character base angular acceleration")] public float characterAngularAcceleration = 5f;
     [Tooltip("Character max velocity")] public float characterMaxVelocity = 0f;
@@ -39,8 +44,6 @@ public class PlayerCore : MonoBehaviour
         // Update Animator State
         UpdateAnimator();
     }
-
-
     private void FixedUpdate()
     {
         // if is stuned, ignore input response
@@ -72,6 +75,11 @@ public class PlayerCore : MonoBehaviour
         physicsCharacter.InitParts();
         // Define the maximum velocity
         physicsCharacter.SetCharacterMaxSpeed(characterMaxVelocity);
+        // define the kill speed
+        physicsCharacter.SetCharacterKillVelocity(this.killVelocity);
+
+        // regist the for the stunted event
+        physicsCharacter.stuntedDelegate += StuntedCallback;
 
         // init vars
         stunted = false;
@@ -113,6 +121,7 @@ public class PlayerCore : MonoBehaviour
         playerTargetAnimator.SetBool("IsMoving", physicsCharacter.GetCurrentVelocity > 0.1f);
         playerTargetAnimator.SetFloat("WalkingSpeed", physicsCharacter.GetCurrentVelocity * animationSpeedInfluence);
     }
+
     #endregion
 
     #region Public Methods
@@ -126,5 +135,51 @@ public class PlayerCore : MonoBehaviour
         // Custom set
         set { cameraController = value; }
     }
+
+    ///<Summary>
+    /// Set the player State
+    ///</Summary>
+    public bool StuntedState
+    {
+        // return the current state
+        get => this.stunted;
+        // if the new state is different from the current physic state
+        set
+        {
+            if (value != physicsCharacter.IsStunted)
+            {
+                // change the current state
+                physicsCharacter.Switchstanding();
+                // state the new state
+                this.stunted = value;
+            }
+        }
+    }
+
+    /// <Summary>
+    /// Callback called when the physics controller set the state to stunted
+    /// </Summary>
+    public void StuntedCallback()
+    {
+        // if the player is current not stunted
+        if (!stunted) { StuntedState = true; StartCoroutine(StuntedCouroutine()); }
+
+        // Debug
+        InformationPanel.DebugConsoleInput("Player is stunted");
+
+    }
+    #endregion
+
+    #region Coroutines
+    // couroutine for stunted timer
+    private IEnumerator StuntedCouroutine()
+    {
+        // wait stunted time for wake up
+        yield return new WaitForSecondsRealtime(stuntedTime);
+        // after wait, change the state
+        StuntedState = false;
+        InformationPanel.DebugConsoleInput("Player is no longer stunted");
+    }
+
     #endregion
 }

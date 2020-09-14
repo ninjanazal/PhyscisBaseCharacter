@@ -24,8 +24,10 @@ Base character model, with bones and painted influence
   - - [x] Slope Movement
   - - [x] Gravity implementation
   - - [x] Jumping
+
+* - [x] Player Stunt response
   - - [ ] Player action response
-    * [ ] Grab/Drag Objects
+    * - [ ] Grab/Drag Objects
 
 # Information system
 
