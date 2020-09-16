@@ -181,7 +181,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &1110063136673927917
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -370,7 +370,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &2327151225455755815
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -433,7 +433,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &2706239947816269623
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -591,7 +591,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!135 &3132384183197433398
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -811,7 +811,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &5317745083048166898
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -969,7 +969,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &5688585809816841779
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1289,7 +1289,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &6553009303701199812
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1444,10 +1444,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cae17d77b3e5bb4ea33e250393f18de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stuntedTime: 2
+  killVelocity: 35
   characterAcceleration: 6
   characterAngularAcceleration: 8
   characterMaxVelocity: 10
   activeDrag: 0.75
+  JumpValue: 2.5
   animationSpeedInfluence: 0.2
 --- !u!1 &7764291241867745813
 GameObject:
@@ -1498,7 +1501,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &7764291241867745815
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1687,7 +1690,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &7827719029561797617
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1972,7 +1975,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &8472874513691600808
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2133,7 +2136,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &510466308122282652
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2156,10 +2159,10 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8809834438627925719}
   m_ConnectedBody: {fileID: 2327151225455755808}
-  m_Anchor: {x: 0, y: 1, z: 0}
+  m_Anchor: {x: 0, y: 0.8, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00080303976, y: -0.0051455363, z: -0.0011080712}
+  m_ConnectedAnchor: {x: 0.0008030398, y: -0.00996488, z: -0.0010493736}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
   m_XMotion: 2
@@ -2270,7 +2273,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   driftPrevention: 0.803
-  groundTestsize: 0.25
+  groundTestsize: 0.2865
 --- !u!1 &8926548004057944237
 GameObject:
   m_ObjectHideFlags: 0
@@ -2320,7 +2323,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &8926548004057944232
 CapsuleCollider:
   m_ObjectHideFlags: 0
