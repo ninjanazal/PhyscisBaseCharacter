@@ -25,6 +25,7 @@ Base character model, with bones and painted influence
   - - [x] Gravity implementation
   - - [x] Jumping
   - - [x] Player Stunt response
+      - - [x] Correc stunt resonse
   - - [ ] Player action response
     * - [ ] Grab/Drag Objects
 
