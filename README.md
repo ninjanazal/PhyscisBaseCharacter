@@ -46,4 +46,6 @@ Base character model, with bones and painted influence
 
 ### Basing ragdol movement
 
+<gif>https://i.imgur.com/8SHW8ol.gif</gif>
+
 - Basic physics movement : https://i.imgur.com/8SHW8ol.gif

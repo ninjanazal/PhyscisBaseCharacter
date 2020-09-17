@@ -28,10 +28,10 @@ public struct RayOutInfo
 
 public class PhysicsCharacterController : MonoBehaviour
 {
-    #region Vars
     //Exposed Vars  -   -   -   -   -
     // List of parts
     [SerializeField] private List<Part> bodyParts = new List<Part>();
+    [SerializeField] private float CharacterMass = 10f; // base mass influence on main mass
     public float BaseMassScale = 30f;  // Base mass Scale
     public Vector3 CharacterGravity = Vector3.down; // Custom gameobject gravity
     public LayerMask collisionMask;     // mask for collision
@@ -39,7 +39,8 @@ public class PhysicsCharacterController : MonoBehaviour
 
     // referenc to the "StandUp" joint
     private ConfigurableJoint StandJoint;
-    private Rigidbody mainRB;
+    private Rigidbody mainRB;       // physics controller RigidBody
+    private float previousVelocity = 0f; // last frame velocity
 
     // Bool states
     public bool IsStunted { get; private set; }
@@ -51,23 +52,20 @@ public class PhysicsCharacterController : MonoBehaviour
     public float groundTestsize = 0.3f;
     private RayOutInfo tempRayInfo = new RayOutInfo { collided = false };
     private CapsuleCollider targetSphereCollider;   // reff to the target controller sphere coll
-    #endregion
 
-    #region Events
     // Stunted delegate and event
     public delegate void OnStuntedDelegate();
     public event OnStuntedDelegate stuntedDelegate;
 
-    #endregion
-
     // Fixed Update
     private void FixedUpdate()
     {
+        // Update controller physics
+        this.UpdateCharacterPhysics();
         // Update all the parts to rotation
         this.UpdatePartsToTarget();
         // add the gravity force 
     }
-
 
     #region Pulbic Methods
     /// <summary>
@@ -81,10 +79,14 @@ public class PhysicsCharacterController : MonoBehaviour
         // stores the reference for the standoUp Joint
         StandJoint = GetComponent<ConfigurableJoint>();
         StandJoint.connectedMassScale = BaseMassScale;
+
         // ref to the main rigidbody
         mainRB = GetComponent<Rigidbody>();
         // change the current gravity
         mainRB.useGravity = false;
+        // set the character mass
+        mainRB.mass = CharacterMass;
+
         // store a reference to the capsule colide
         this.targetSphereCollider = this.GetComponent<CapsuleCollider>();
 
@@ -137,7 +139,7 @@ public class PhysicsCharacterController : MonoBehaviour
     /// set the kill fall velocity on the physics controller
     /// </Summary>
     /// <param name="value"> Kill velocity value </param>
-    public void SetCharacterKillVelocity(float value) { killVelocity = value; }
+    public void SetCharacterKillVelocity(float value) { killVelocity = (float)Math.Pow(value, 2.0); }
 
     /// <summary>
     /// Apply motion to this rigid body
@@ -181,8 +183,8 @@ public class PhysicsCharacterController : MonoBehaviour
     /// <param name="force">Jumping force</param>
     public void Jump(float force)
     {
-        // check if the player is grounded
-        if (!tempRayInfo.collided) return;
+        // check if the player is grounded or is stunned
+        if (!tempRayInfo.collided || IsStunted) return;
 
         // if grounded add force based on the force
         mainRB.AddForce(Vector3.up * (float)Math.Pow(mainRB.mass, force), ForceMode.Impulse);
@@ -215,28 +217,32 @@ public class PhysicsCharacterController : MonoBehaviour
                 Quaternion.RotateTowards(this.transform.rotation, Quaternion.LookRotation(value, Vector3.up), angularVel);
     }
 
-    // Update all the dynamic rag rotation to target
-    void UpdatePartsToTarget()
+    /// <Summary>
+    /// Calculates the physics states
+    /// </Summary>
+    private void UpdateCharacterPhysics()
     {
         // correct gravity
         this.tempRayInfo = GroundCheck();   // save the current groundCheck state
 
         if (!this.tempRayInfo.collided)    // if not on the ground, add gravity
-            this.mainRB.AddForce(CharacterGravity, ForceMode.Impulse); // add gravity      
-        // check if the player fall killed the player  
-        else if (killVelocity != 0f && Math.Abs(this.mainRB.velocity.y) >= killVelocity && this.tempRayInfo.collided)
-            // the player should be stunted
-            stuntedDelegate();
+            this.mainRB.AddForce(CharacterGravity, ForceMode.Impulse); // add gravity     
+        else CheckDeathState();
 
+        // Stores the currenct velocity
+        this.previousVelocity = this.mainRB.velocity.sqrMagnitude;
+    }
 
-        // update bodyparts target rotation
-        foreach (var part in bodyParts)
-            // aply the diff to the start joint rotation
-            if (part.inverting)
-                part.partJoint.targetRotation = Quaternion.Inverse(part.partTarget.transform.localRotation);
-            else
-                part.partJoint.targetRotation = part.partTarget.transform.localRotation;
-
+    // Update all the dynamic rag rotation to target
+    private void UpdatePartsToTarget()
+    {
+        if (!IsStunted)
+            // update bodyparts target rotation
+            foreach (var part in bodyParts)
+                // aply the diff to the start joint rotation
+                part.partJoint.targetRotation = (part.inverting) ?
+                        Quaternion.Inverse(part.partTarget.transform.localRotation) :
+                        part.partTarget.transform.localRotation;
     }
 
     // MOVEMENT -   -   -   -   -
@@ -265,6 +271,20 @@ public class PhysicsCharacterController : MonoBehaviour
         return calculateForce;
     }
 
+    // STATES
+    /// <Summary>
+    /// Check if the character should be stunned
+    /// </Summary>
+    private void CheckDeathState()
+    {
+        // KILL STATE CHECK
+        // check if the player fall killed the player  
+        if (this.mainRB.velocity.sqrMagnitude >= killVelocity || this.previousVelocity >= killVelocity)
+            // the player should be stunted
+            stuntedDelegate();
+
+    }
+
     /// <summary>
     /// check if the player is grounded
     /// </summary>
@@ -275,8 +295,13 @@ public class PhysicsCharacterController : MonoBehaviour
 
         // check for collisions for the ground
         if (Physics.SphereCast(tempRay, this.targetSphereCollider.radius * 0.85f, out RaycastHit tempHitInfo, 3f * this.groundTestsize, collisionMask))
+            // if collided with ground
             return new RayOutInfo()
-            { collided = true, collisionNormal = tempHitInfo.normal, collisionPoint = tempHitInfo.point };    // if collided with ground
+            {
+                collided = true,
+                collisionNormal = tempHitInfo.normal,
+                collisionPoint = tempHitInfo.point
+            };
         // if not
         return new RayOutInfo() { collided = false };
     }

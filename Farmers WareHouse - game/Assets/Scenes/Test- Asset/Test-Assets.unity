@@ -6086,6 +6086,11 @@ PrefabInstance:
       propertyPath: cameraTarget
       value: 
       objectReference: {fileID: 2054430199}
+    - target: {fileID: 7907586271516650477, guid: 411a5fd59d8fe1e44bfb6fcb0bff6eaa,
+        type: 3}
+      propertyPath: orthographic size
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 7907586271516650479, guid: 411a5fd59d8fe1e44bfb6fcb0bff6eaa,
         type: 3}
       propertyPath: m_Name
@@ -6165,6 +6170,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player_Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458112676552646902, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: killVelocity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8458112676552646902, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: characterAngularAcceleration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: BaseMassInfluence
+      value: 0.33
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05e7bd4ffe02bb448b40d135a5b03bdc, type: 3}

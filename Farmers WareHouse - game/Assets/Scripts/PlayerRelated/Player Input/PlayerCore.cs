@@ -22,7 +22,7 @@ public class PlayerCore : MonoBehaviour
     [Header("Character Configuration")]
     [Header("Player State")]
     [Tooltip("Character Stunted time")] public float stuntedTime = 2f;
-    [Tooltip("Character kill velocity when falling"), Range(25f, 50f)] public float killVelocity = 25f;
+    [Tooltip("Character kill velocity when falling"), Range(10f, 50f)] public float killVelocity = 25f;
     [Header("Character physic values")]
     [Tooltip("Character base acceleration")] public float characterAcceleration = 200f;
     [Tooltip("Character base angular acceleration")] public float characterAngularAcceleration = 5f;
@@ -32,11 +32,9 @@ public class PlayerCore : MonoBehaviour
 
     [Header("Animation Controls")]
     [Tooltip("Walking animation based on current speed"), Range(0f, 1f)] public float animationSpeedInfluence = 0.2f;
+
     // Start is called before the first frame update
-    void Start()
-    {
-        InitController();   // Initialize this controller
-    }
+    void Start() => InitController();   // Initialize this controller
 
     // Update is called once per frame
     void Update()
@@ -174,8 +172,11 @@ public class PlayerCore : MonoBehaviour
     // couroutine for stunted timer
     private IEnumerator StuntedCouroutine()
     {
+        // wait for the player to completly stop
+        while (physicsCharacter.GetCurrentVelocity >= 1f) { yield return null; }
         // wait stunted time for wake up
         yield return new WaitForSecondsRealtime(stuntedTime);
+
         // after wait, change the state
         StuntedState = false;
         InformationPanel.DebugConsoleInput("Player is no longer stunted");

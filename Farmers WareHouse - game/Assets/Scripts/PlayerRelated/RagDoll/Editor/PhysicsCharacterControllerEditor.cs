@@ -6,7 +6,7 @@ using UnityEditor;
 public class PhysicsCharacterControllerEditor : Editor
 {
     // serializedProperties
-    SerializedProperty partList, baseMass;
+    SerializedProperty partList, baseMass, characterMass;
     SerializedProperty playerGravity, collisionMask;
     SerializedProperty groundCheckThreshold;
     SerializedProperty driftPrevention;
@@ -16,6 +16,7 @@ public class PhysicsCharacterControllerEditor : Editor
     {
         // set the serialized properties
         partList = serializedObject.FindProperty("bodyParts");              // Exposed body parts
+        characterMass = serializedObject.FindProperty("CharacterMass"); // base mass influence
         baseMass = serializedObject.FindProperty("BaseMassScale");          // Base character mass
         playerGravity = serializedObject.FindProperty("CharacterGravity");  // Gravity value
         collisionMask = serializedObject.FindProperty("collisionMask");     // collision Mask
@@ -47,11 +48,25 @@ public class PhysicsCharacterControllerEditor : Editor
         EditorGUILayout.Space(20f);  // spaec
 
 
-        // Base StandUp mass Scale
         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+
+        // Base StandUp mass Scale
+        EditorGUILayout.BeginHorizontal();
+
+        EditorGUILayout.BeginVertical();
         EditorGUILayout.LabelField("Base StandUp Joint Mass Scale", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(baseMass);
+        EditorGUILayout.PropertyField(baseMass, new GUIContent());
         EditorGUILayout.Space(5f);
+        EditorGUILayout.EndVertical();
+
+        // Base mass influence
+        EditorGUILayout.BeginVertical();
+        EditorGUILayout.LabelField("Character Mass", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(characterMass, new GUIContent());
+        EditorGUILayout.Space(5f);
+        EditorGUILayout.EndVertical();
+        EditorGUILayout.EndHorizontal();
+
 
         // Ground check value
         EditorGUILayout.LabelField("Ground Check Threshold", EditorStyles.boldLabel);
