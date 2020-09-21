@@ -10,6 +10,7 @@ public class PhysicsCharacterControllerEditor : Editor
     SerializedProperty playerGravity, collisionMask;
     SerializedProperty groundCheckThreshold;
     SerializedProperty driftPrevention;
+    SerializedProperty stepSearchDistance, stepMaxSize;
 
     //ON enable
     private void OnEnable()
@@ -22,6 +23,9 @@ public class PhysicsCharacterControllerEditor : Editor
         collisionMask = serializedObject.FindProperty("collisionMask");     // collision Mask
         groundCheckThreshold = serializedObject.FindProperty("groundTestsize"); // value for the ground detection threshold
         driftPrevention = serializedObject.FindProperty("driftPrevention"); // value for the drift prevention
+        stepSearchDistance = serializedObject.FindProperty("stepSearchDistance"); // distance to check for step
+        stepMaxSize = serializedObject.FindProperty("maxStepSize");     // step max size
+
     }
 
     // on inspector GUIO
@@ -71,6 +75,15 @@ public class PhysicsCharacterControllerEditor : Editor
         // Ground check value
         EditorGUILayout.LabelField("Ground Check Threshold", EditorStyles.boldLabel);
         EditorGUILayout.Slider(groundCheckThreshold, .1f, .3f, new GUIContent());
+        EditorGUILayout.Space(5f);
+
+        // step detection
+        // set search distance
+        EditorGUILayout.LabelField("Set Search distance", EditorStyles.boldLabel);
+        EditorGUILayout.Slider(stepSearchDistance, 0.1f, 1f, new GUIContent());
+        //max step size
+        EditorGUILayout.LabelField("Max Step Size", EditorStyles.boldLabel);
+        EditorGUILayout.Slider(stepMaxSize, .1f, 3.5f, new GUIContent());
         EditorGUILayout.Space(5f);
 
         // Drift prevention

@@ -36,6 +36,10 @@ public class PhysicsCharacterController : MonoBehaviour
     public Vector3 CharacterGravity = Vector3.down; // Custom gameobject gravity
     public LayerMask collisionMask;     // mask for collision
     public float driftPrevention = 0f;  // preventing character from drifting
+    public float groundTestsize = 0.3f; // Ground detection distance
+    public float stepSearchDistance = 0.2f;    // Distance to check for step
+    public float maxStepSize = 0.5f;     // max step size
+
 
     // referenc to the "StandUp" joint
     private ConfigurableJoint StandJoint;
@@ -49,7 +53,6 @@ public class PhysicsCharacterController : MonoBehaviour
     private float killVelocity = 0f;
 
     //Ground collision information
-    public float groundTestsize = 0.3f;
     private RayOutInfo tempRayInfo = new RayOutInfo { collided = false };
     private CapsuleCollider targetSphereCollider;   // reff to the target controller sphere coll
 
@@ -154,8 +157,12 @@ public class PhysicsCharacterController : MonoBehaviour
         // Draw the debug line
         Debug.DrawLine(this.transform.position, this.transform.position + direction);
 
+        // STAIR DETECTION  -   -   -   -   -
+        // calculate de height for the step
+        mainRB.MovePosition(mainRB.position + (Vector3.up * StepDetection()));
         // add fore to the rb
         mainRB.AddForce(MovementForceCalculation(direction, tempRayInfo), ForceMode.Impulse);
+
 
         // keep the maximum velocity inside range
         if (GetCurrentVelocity > maxVelocity)
@@ -260,6 +267,7 @@ public class PhysicsCharacterController : MonoBehaviour
         Vector3 calculateForce = Quaternion.FromToRotation(this.transform.up, colInfo.collisionNormal) * (moveDirection *
             Vector3.Dot(colInfo.collisionNormal, Vector3.up));
 
+
         // Drift compensation
         calculateForce *= Mathf.Clamp((1f - Math.Abs(Vector3.Dot(calculateForce.normalized, mainRB.velocity.normalized)))
          * mainRB.mass * this.driftPrevention
@@ -306,6 +314,41 @@ public class PhysicsCharacterController : MonoBehaviour
         return new RayOutInfo() { collided = false };
     }
 
+    /// <summary>
+    /// Detect if there is any step
+    /// </summary>
+    /// <returns>
+    /// Return the detected step Height, if not return zero
+    ///</returns>
+    private float StepDetection()
+    {
+        // temp hit information
+        RaycastHit hit;
+        Vector3 tempPostion = this.targetSphereCollider.center;
+        var distance = 0f;
+
+        // Check if there is any obstacle in front of feet
+        if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, stepSearchDistance, collisionMask))
+        {
+            // if is ground in front of player
+            // check if the step is bigger than max size
+            // generate the position for the vertical test
+            // position calculated based on detected distance
+            tempPostion += this.transform.forward * Vector3.Distance(this.transform.position, hit.point);
+            InformationPanel.DebugConsoleInput("In front step distance");
+            // Evaluate if the step is in range for steping up
+            if (Physics.Raycast(tempPostion, Vector3.down, out hit, this.targetSphereCollider.height * 0.5f) &&
+                (distance = Vector3.Distance(hit.point, this.transform.position)) <= maxStepSize)
+            {// if the vertical ray hit a objecto based on the distance from the horizontal one
+                // and the distance from the ground pos to the vertical hit is less than step size, return the step position
+                InformationPanel.DebugConsoleInput("valid step height");
+                Debug.DrawLine(this.transform.position, hit.point, Color.yellow);
+                return distance;
+            }
+        }
+        // return 0 if not detected
+        return 0f;
+    }
 
     // GIZMOS   -   -   -   -   -
     // Debug information
