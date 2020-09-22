@@ -39,7 +39,6 @@ Base character model, with bones and painted influence
 # Dev Notes
 
 - Current notes
-  - Stairs movement
   - Grabing objects
 -
 

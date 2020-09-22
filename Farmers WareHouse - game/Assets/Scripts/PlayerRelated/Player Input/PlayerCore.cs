@@ -8,6 +8,7 @@ public class PlayerCore : MonoBehaviour
     // Reference to the Physics character Controller
     private PhysicsCharacterController physicsCharacter;
     private Animator playerTargetAnimator;
+    private GrabController playerGrabController;
 
     // Internel vars
     // ref to input controller
@@ -32,6 +33,10 @@ public class PlayerCore : MonoBehaviour
 
     [Header("Animation Controls")]
     [Tooltip("Walking animation based on current speed"), Range(0f, 1f)] public float animationSpeedInfluence = 0.2f;
+
+    [Header("Grab System")]
+    [Tooltip("Left Hand Joint")] public ConfigurableJoint LeftHandJoint;
+    [Tooltip("Right Hand Joint")] public ConfigurableJoint RighttHandJoint;
 
     // Start is called before the first frame update
     void Start() => InitController();   // Initialize this controller
@@ -71,6 +76,7 @@ public class PlayerCore : MonoBehaviour
         // Debug information and initialize  the parts
         InformationPanel.DebugConsoleInput("Physics System connected!");
         physicsCharacter.InitParts();
+
         // Define the maximum velocity
         physicsCharacter.SetCharacterMaxSpeed(characterMaxVelocity);
         // define the kill speed
@@ -84,6 +90,14 @@ public class PlayerCore : MonoBehaviour
 
         // Regists for jump delegate
         InputManager.Instance.jumpDelegate += () => { physicsCharacter.Jump(this.JumpValue); };
+
+        // grab controller
+        // get ref to controller
+        this.playerGrabController = this.GetComponentInChildren<GrabController>();
+        // Init with enable tag
+        this.playerGrabController.Init(controllerState: true, lHand: ref LeftHandJoint, rHand: ref RighttHandJoint);
+        // regist the controller to the action event
+        InputManager.Instance.actionDelegate += playerGrabController.ActionCallback;
     }
 
     /// <summary>

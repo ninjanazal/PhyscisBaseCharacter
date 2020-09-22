@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// Struct that organizes the target with the GO and the transform
@@ -48,6 +48,7 @@ public class PhysicsCharacterController : MonoBehaviour
 
     // Bool states
     public bool IsStunted { get; private set; }
+
     // Behaviour
     private float maxVelocity = 0f;
     private float killVelocity = 0f;
@@ -78,7 +79,6 @@ public class PhysicsCharacterController : MonoBehaviour
     {
         // Setting to the stangin pos
         IsStunted = false;
-
         // stores the reference for the standoUp Joint
         StandJoint = GetComponent<ConfigurableJoint>();
         StandJoint.connectedMassScale = BaseMassScale;
@@ -159,7 +159,8 @@ public class PhysicsCharacterController : MonoBehaviour
 
         // STAIR DETECTION  -   -   -   -   -
         // calculate de height for the step
-        mainRB.MovePosition(mainRB.position + (Vector3.up * StepDetection()));
+        //mainRB.MovePosition(mainRB.position + (Vector3.up * StepDetection()));
+
         // add fore to the rb
         mainRB.AddForce(MovementForceCalculation(direction, tempRayInfo), ForceMode.Impulse);
 
@@ -310,6 +311,7 @@ public class PhysicsCharacterController : MonoBehaviour
                 collisionNormal = tempHitInfo.normal,
                 collisionPoint = tempHitInfo.point
             };
+
         // if not
         return new RayOutInfo() { collided = false };
     }
