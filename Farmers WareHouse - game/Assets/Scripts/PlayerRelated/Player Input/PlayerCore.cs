@@ -35,8 +35,8 @@ public class PlayerCore : MonoBehaviour
     [Tooltip("Walking animation based on current speed"), Range(0f, 1f)] public float animationSpeedInfluence = 0.2f;
 
     [Header("Grab System")]
-    [Tooltip("Left Hand Joint")] public ConfigurableJoint LeftHandJoint;
-    [Tooltip("Right Hand Joint")] public ConfigurableJoint RighttHandJoint;
+    [Tooltip("Left Hand Joint")] public FixedJoint LeftHandJoint;
+    [Tooltip("Right Hand Joint")] public FixedJoint RighttHandJoint;
 
     // Start is called before the first frame update
     void Start() => InitController();   // Initialize this controller
@@ -82,16 +82,16 @@ public class PlayerCore : MonoBehaviour
         // define the kill speed
         physicsCharacter.SetCharacterKillVelocity(this.killVelocity);
 
+        // Stunted  -   -   -   -   -
         // regist the for the stunted event
         physicsCharacter.stuntedDelegate += StuntedCallback;
-
         // init vars
         stunted = false;
 
         // Regists for jump delegate
         InputManager.Instance.jumpDelegate += () => { physicsCharacter.Jump(this.JumpValue); };
 
-        // grab controller
+        // Grab controller  -   -   -   -   -
         // get ref to controller
         this.playerGrabController = this.GetComponentInChildren<GrabController>();
         // Init with enable tag
