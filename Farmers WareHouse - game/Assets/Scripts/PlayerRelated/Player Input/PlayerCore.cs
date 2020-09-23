@@ -35,8 +35,8 @@ public class PlayerCore : MonoBehaviour
     [Tooltip("Walking animation based on current speed"), Range(0f, 1f)] public float animationSpeedInfluence = 0.2f;
 
     [Header("Grab System")]
-    [Tooltip("Left Hand Joint")] public FixedJoint LeftHandJoint;
-    [Tooltip("Right Hand Joint")] public FixedJoint RighttHandJoint;
+    [Tooltip("Left Hand Joint")] public SpringJoint LeftHandJoint;
+    [Tooltip("Right Hand Joint")] public SpringJoint RighttHandJoint;
 
     // Start is called before the first frame update
     void Start() => InitController();   // Initialize this controller

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GrabController : MonoBehaviour
 {
     // private reff
-    private FixedJoint leftHandJoint, rightHandJoint;    // ref to the hand joints
+    private SpringJoint leftHandJoint, rightHandJoint;    // ref to the hand joints
     private BoxCollider actionTrigger;    // reff to the action trigger
     private bool isEnable;    // controller state
 
@@ -17,7 +17,7 @@ public class GrabController : MonoBehaviour
     /// Init the controller and and set the controller state
     /// </summary>
     ///<param name="controllerState">Set the state of the controller when init</param>
-    public void Init(bool controllerState, ref FixedJoint lHand, ref FixedJoint rHand)
+    public void Init(bool controllerState, ref SpringJoint lHand, ref SpringJoint rHand)
     {        // set the ref to the hand configurable joints
         leftHandJoint = lHand; rightHandJoint = rHand; isEnable = controllerState;
         // get ref to the action triggert
