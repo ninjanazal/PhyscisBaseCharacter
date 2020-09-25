@@ -60,7 +60,7 @@ Camera:
   far clip plane: 1000
   field of view: 70
   orthographic: 1
-  orthographic size: 12
+  orthographic size: 14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -98,4 +98,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTarget: {fileID: 0}
   angularValues: {x: 45, y: 45, z: 0}
-  distanceToTarget: 50
+  distanceToTarget: 40

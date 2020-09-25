@@ -35,8 +35,8 @@ public class PlayerCore : MonoBehaviour
     [Tooltip("Walking animation based on current speed"), Range(0f, 1f)] public float animationSpeedInfluence = 0.2f;
 
     [Header("Grab System")]
-    [Tooltip("Left Hand Joint")] public SpringJoint LeftHandJoint;
-    [Tooltip("Right Hand Joint")] public SpringJoint RighttHandJoint;
+    [Tooltip("Left Hand")] public GameObject LeftHandGO;
+    [Tooltip("Right Hand")] public GameObject RightHandGO;
 
     // Start is called before the first frame update
     void Start() => InitController();   // Initialize this controller
@@ -95,7 +95,7 @@ public class PlayerCore : MonoBehaviour
         // get ref to controller
         this.playerGrabController = this.GetComponentInChildren<GrabController>();
         // Init with enable tag
-        this.playerGrabController.Init(controllerState: true, lHand: ref LeftHandJoint, rHand: ref RighttHandJoint);
+        this.playerGrabController.Init(controllerState: true, lHand: ref LeftHandGO, rHand: ref RightHandGO);
         // regist the controller to the action event
         InputManager.Instance.actionDelegate += playerGrabController.ActionCallback;
     }

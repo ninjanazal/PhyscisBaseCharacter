@@ -5,7 +5,8 @@ using UnityEngine;
 public class GrabController : MonoBehaviour
 {
     // private reff
-    private SpringJoint leftHandJoint, rightHandJoint;    // ref to the hand joints
+    private GameObject leftHandGO, rightHandGO;    // ref to the hand joints
+    private ConfigurableJoint leftHandJoint, rightHandJoint;    // ref to joints connecting obj to and
     private BoxCollider actionTrigger;    // reff to the action trigger
     private bool isEnable;    // controller state
 
@@ -17,9 +18,9 @@ public class GrabController : MonoBehaviour
     /// Init the controller and and set the controller state
     /// </summary>
     ///<param name="controllerState">Set the state of the controller when init</param>
-    public void Init(bool controllerState, ref SpringJoint lHand, ref SpringJoint rHand)
+    public void Init(bool controllerState, ref GameObject lHand, ref GameObject rHand)
     {        // set the ref to the hand configurable joints
-        leftHandJoint = lHand; rightHandJoint = rHand; isEnable = controllerState;
+        leftHandGO = lHand; rightHandGO = rHand; isEnable = controllerState;
         // get ref to the action triggert
         actionTrigger = GetComponent<BoxCollider>();
     }
@@ -33,21 +34,68 @@ public class GrabController : MonoBehaviour
         if (!isEnable) return;
 
         // if is enable and has a targetobject, check if is grabbing 
-        if (leftHandJoint.connectedBody || rightHandJoint.connectedBody)
+        if (leftHandJoint || rightHandJoint)
         {
+            // remove the joint component
+            Destroy(leftHandJoint);
+            Destroy(rightHandJoint);
+
             // if any hand as a object attatch, realease 
-            leftHandJoint.connectedBody = null;
-            rightHandJoint.connectedBody = null;
+            leftHandJoint = null;
+            leftHandJoint = null;
+
+            // enable the action trigger
+            actionTrigger.enabled = true;
+
+            //reset the rigidbody
+            inTriggerArea.GetComponent<Rigidbody>().isKinematic = false;
+            inTriggerArea.GetComponent<Rigidbody>().useGravity = true;
+
+            // remove object from parent
+            inTriggerArea.transform.parent = null;
+            // reset the observed obj
+            inTriggerArea = null;
+
 
             // Debug to information pannel
             InformationPanel.DebugConsoleInput("Realeased Object");
         }
         // if there is notting grabbed and exist a target object
-        else if (!leftHandJoint.connectedBody && !rightHandJoint.connectedBody && inTriggerArea)
+        else if (!leftHandJoint && !rightHandJoint && inTriggerArea)
         {
-            // set the target obj to the connected body on configurable joints
-            leftHandJoint.connectedBody = inTriggerArea.GetComponent<Rigidbody>();
-            rightHandJoint.connectedBody = leftHandJoint.connectedBody;
+            // create joints on target obj to move hads to obj
+            leftHandJoint = inTriggerArea.AddComponent<ConfigurableJoint>();
+            rightHandJoint = inTriggerArea.AddComponent<ConfigurableJoint>();
+
+            // Commun setting
+            var tempJointDrive = new JointDrive();
+            tempJointDrive.positionSpring = 300f;
+            tempJointDrive.maximumForce = Mathf.Infinity;
+
+            // set Up
+            // Left hand joint
+            leftHandJoint.connectedBody = leftHandGO.GetComponent<Rigidbody>();
+            leftHandJoint.autoConfigureConnectedAnchor = false;
+            leftHandJoint.connectedAnchor = Vector3.zero;
+            leftHandJoint.xDrive = leftHandJoint.yDrive = leftHandJoint.zDrive = tempJointDrive;
+            leftHandJoint.connectedMassScale = 500f;
+
+            // right hand joint
+            rightHandJoint.connectedBody = rightHandGO.GetComponent<Rigidbody>();
+            rightHandJoint.autoConfigureConnectedAnchor = false;
+            rightHandJoint.connectedAnchor = Vector3.zero;
+            rightHandJoint.xDrive = rightHandJoint.yDrive = rightHandJoint.zDrive = tempJointDrive;
+            rightHandJoint.connectedMassScale = 500f;
+
+            // obj to player
+            // set grabbed obj to chilled
+            inTriggerArea.transform.SetParent(this.transform);
+            inTriggerArea.transform.localPosition += Vector3.up;
+            inTriggerArea.GetComponent<Rigidbody>().isKinematic = true;
+            inTriggerArea.GetComponent<Rigidbody>().useGravity = false;
+
+            // deactivate the action trigger
+            actionTrigger.enabled = false;
 
             // debug to information pannet
             InformationPanel.DebugConsoleInput("Oject grabbed!");
