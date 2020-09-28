@@ -40,12 +40,5 @@ Base character model, with bones and painted influence
 
 - Current notes
   - Grabing objects
--
-
-# Development ScreenShots
-
-### Basing ragdol movement
-
-<gif>https://i.imgur.com/8SHW8ol.gif</gif>
-
-- Basic physics movement : https://i.imgur.com/8SHW8ol.gif
+- Setting Game to Mobile
+  - Switch input implementation to this platform
