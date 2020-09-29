@@ -205,10 +205,17 @@ public class PhysicsCharacterController : MonoBehaviour
     /// </summary>
     /// <return>Return the vector forward</return>
     public Vector3 GetPhysicsForward { get { return this.transform.forward; } }
+    
     /// <summary>
     /// Get the current gameVelocity
     /// </summary>
     public float GetCurrentVelocity { get { return mainRB.velocity.magnitude; } }
+    
+    /// <summary>
+    /// Get the state for the current physics state
+    /// </summary>
+    /// <return>Return true if on ground at this physical update</return>
+    public bool isGroundedNow { get { return this.tempRayInfo.collided; } }
     #endregion
 
     #region Private Methods

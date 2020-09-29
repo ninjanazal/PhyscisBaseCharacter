@@ -130,7 +130,7 @@ public class PlayerCore : MonoBehaviour
     private void UpdateAnimator()
     {
         // update the moving bool
-        playerTargetAnimator.SetBool("IsMoving", physicsCharacter.GetCurrentVelocity > 0.1f);
+        playerTargetAnimator.SetBool("IsMoving", physicsCharacter.GetCurrentVelocity > 0.1f && physicsCharacter.isGroundedNow);
         playerTargetAnimator.SetFloat("WalkingSpeed", physicsCharacter.GetCurrentVelocity * animationSpeedInfluence);
     }
 

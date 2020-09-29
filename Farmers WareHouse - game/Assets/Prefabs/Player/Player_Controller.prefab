@@ -1894,7 +1894,7 @@ ConfigurableJoint:
   m_RotationDriveMode: 0
   m_AngularXDrive:
     serializedVersion: 3
-    positionSpring: 1000
+    positionSpring: 5000
     positionDamper: 25
     maximumForce: 3.4028233e+38
   m_AngularYZDrive:
@@ -2352,18 +2352,18 @@ ConfigurableJoint:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8809834438627925719}
   m_ConnectedBody: {fileID: 2327151225455755808}
-  m_Anchor: {x: 0, y: 0.8, z: 0}
+  m_Anchor: {x: 0, y: 0.85, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
-  m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0008330819, y: -0.009069021, z: -0.00117142}
+  m_AutoConfigureConnectedAnchor: 0
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
   m_SecondaryAxis: {x: 0, y: 1, z: 0}
-  m_XMotion: 2
-  m_YMotion: 2
-  m_ZMotion: 2
-  m_AngularXMotion: 2
+  m_XMotion: 0
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 0
   m_AngularYMotion: 2
-  m_AngularZMotion: 2
+  m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -2386,11 +2386,11 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 0
+    limit: 177
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 0
+    limit: 44.352745
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: -0.2, z: 0}
@@ -2415,17 +2415,17 @@ ConfigurableJoint:
   m_RotationDriveMode: 0
   m_AngularXDrive:
     serializedVersion: 3
-    positionSpring: 600
+    positionSpring: 5000
     positionDamper: 50
     maximumForce: 3.4028233e+38
   m_AngularYZDrive:
     serializedVersion: 3
-    positionSpring: 600
+    positionSpring: 5000
     positionDamper: 10
     maximumForce: 3.4028233e+38
   m_SlerpDrive:
     serializedVersion: 3
-    positionSpring: 200
+    positionSpring: 5000
     positionDamper: 100
     maximumForce: 3.4028233e+38
   m_ProjectionMode: 0
@@ -2613,7 +2613,7 @@ ConfigurableJoint:
   m_RotationDriveMode: 0
   m_AngularXDrive:
     serializedVersion: 3
-    positionSpring: 1000
+    positionSpring: 5000
     positionDamper: 25
     maximumForce: 3.4028233e+38
   m_AngularYZDrive:
