@@ -91,14 +91,16 @@ public class PlayerCore : MonoBehaviour
         // init vars
         stunted = false;
 
-        // Regists for jump delegate
-        InputManager.Instance.jumpDelegate += () => { physicsCharacter.Jump(this.JumpValue); };
 
         // Grab controller  -   -   -   -   -
         // get ref to controller
         this.playerGrabController = this.GetComponentInChildren<GrabController>();
         // Init with enable tag
         this.playerGrabController.Init(controllerState: true, lHand: ref LeftHandGO, rHand: ref RightHandGO);
+
+        // Regists for jump delegate
+        InputManager.Instance.jumpDelegate += () => { physicsCharacter.Jump(this.JumpValue); };
+
         // regist the controller to the action event
         InputManager.Instance.actionDelegate += playerGrabController.ActionCallback;
     }

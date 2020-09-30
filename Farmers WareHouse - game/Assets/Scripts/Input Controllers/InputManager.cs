@@ -19,13 +19,11 @@ public class InputManager : MonoBehaviour
     private bool IsEnable;   // set if is enable 
     private Rect JoyDetectionArea;   // Safe area for the joy action detection
 
-    // jump action click
-    // set if the jumo button has been realease after press
-    private bool jumpRealeased = false;
-
     // action button pressed
     // evaluate if the button as been realeaded after pressed
     private bool actionPressed = false;
+    private Vector2 canvasProportion = Vector2.zero; // reff to input related canvas
+    private Rect SafeZoneFixedToCanvas = Rect.zero;  // safe soze calculated for the canvas size
 
     // JOYSTICK INFO    -   -   -   -   -
     private bool JoyStickVisible;   // Current joy visible state
@@ -42,25 +40,31 @@ public class InputManager : MonoBehaviour
     private Vector2 RelatedDefaultPosition = Vector2.zero;  // default position to be calculated based on detection area
     private Color DefaultAlphaPercent = new Color(1f, 1f, 1f, 0.25f);  // Default value to alfa when stationary
 
+    // Jump button reff
+    private Image jumpBtnImg;   // ref to the button image
+    private Button jumpBtn;     // ref to the button component
+    private RectTransform jumpBtnRct;   // ref to the button rect transfrom
+
     // EXPOSED VARS -   -   -   -   -
-    [Header("Input Settings")]
+    /// JoyStick    -   -   -   -   -
+    [Header("Input Settings - JoyStick")]
     [Tooltip("Percet of screen from left used to joy Detection"), Range(.1f, .5f)] public float ScreenPercentDetect = 0.25f;
-    [Header("joyStick Behaviour")]
+    [Header("JoyStick Behaviour")]
     [Tooltip("Mark If Joy should Return to position")] public bool shouldReturnToDefault = true;
     [Tooltip("Default position")] public Vector2 positionPercent = Vector2.zero;
+    // JUMP BUTTON  -   -   -   -   -
+    [Space(5f)]
+    [Header("Input Setting - Jump Button")]
+    [Tooltip("Margin from bottom and top")] public Vector2 JumpPercentMargin = Vector2.zero;
 
-    // awake
-    private void Awake()
-    {
+    // Start
+    private void Start() =>
         // Initialize the singleton
         InitSingleton();
-    }
 
     private void FixedUpdate()
     {
         // call registed delegates
-        // Jump action
-        if (GetJumpValue()) jumpDelegate();
         // Press Action
         if (GetActionValue()) actionDelegate();
     }
@@ -72,7 +76,6 @@ public class InputManager : MonoBehaviour
         // Joysitch input
         OnScreenController();
         // ACtion Resolver
-
     }
 
 
@@ -84,13 +87,22 @@ public class InputManager : MonoBehaviour
     {        // Return the a vector based on vertical and horizontal input values
         return new Vector2(-InputVector.x, InputVector.y);
     }
+
+    /// <summary>
+    /// Called when pressed the jump button
+    /// </summary>
+    public void JumbButtonPressCall() =>
+        // call the delegate event to jump input
+        jumpDelegate();
+
+
     #endregion
 
     #region Private Methods
     ///<Summary>
     /// Init Singleton instance
     ///</Summary>
-    private void InitSingleton()
+    public void InitSingleton()
     {
         // check if the singleton exists or not
         if (instance == null) instance = this;
@@ -100,14 +112,22 @@ public class InputManager : MonoBehaviour
         // Set as enable
         this.IsEnable = true;
 
+        // calculate the canvas proportion
+        this.canvasProportion = Vector2.one / this.transform.localScale;
+        this.SafeZoneFixedToCanvas = AplicationFuncs.ResizedRect(rect: Screen.safeArea, proportion: canvasProportion);
+
+        Debug.Log(canvasProportion);
+        Debug.Log(Screen.safeArea);
+        Debug.Log(SafeZoneFixedToCanvas);
         // calculate the area for joyDetection
         JoyDetectionArea =
-            new Rect(Screen.safeArea.xMin, Screen.safeArea.yMin,
-             Screen.safeArea.width * ScreenPercentDetect, Screen.safeArea.height);
+            new Rect(SafeZoneFixedToCanvas.xMin, SafeZoneFixedToCanvas.yMin,
+             SafeZoneFixedToCanvas.width * ScreenPercentDetect, SafeZoneFixedToCanvas.height);
+
 
         // get the joyStick REffs, knowing that has a child that is a joyBack and a child of that been the knob
         // back part of the joy
-        this.joyBackImg = this.GetComponentInChildren<RawImage>();
+        this.joyBackImg = this.transform.GetChild(0).GetComponent<RawImage>();
         this.joyBackRect = this.joyBackImg.GetComponent<RectTransform>();
 
         // knoob part of the joy
@@ -116,7 +136,6 @@ public class InputManager : MonoBehaviour
 
         // Calculate the maximus radius for the joy based on size
         this.JoyMaxRadius = this.joyBackRect.rect.width * 0.5f - this.joyKnobRect.rect.width * 0.5f;
-        Debug.Log(this.JoyMaxRadius);
 
         // calculate the default related position, validating the values making joy visivel on safe area all the time
         this.RelatedDefaultPosition = new Vector2(
@@ -127,7 +146,16 @@ public class InputManager : MonoBehaviour
                 ((JoyDetectionArea.height * positionPercent.y) < (joyBackRect.rect.height / 2f) ?
                 (joyBackRect.rect.height / 2f) : (JoyDetectionArea.height * positionPercent.y)));
 
-        // Hide all the joy images
+        // get refference to the jump button components
+        this.jumpBtnImg = this.transform.GetChild(1).GetComponent<Image>();
+        this.jumpBtn = this.jumpBtnImg.GetComponent<Button>();
+        this.jumpBtnRct = this.jumpBtnImg.GetComponent<RectTransform>();
+
+        // calculate the jump button position based on margin and placed in safe area
+        this.jumpBtnRct.position = new Vector2(
+            SafeZoneFixedToCanvas.xMax,
+             SafeZoneFixedToCanvas.yMax);
+        // Set joy to invisible
         IsJoyStickVisible = false;
     }
 
@@ -164,7 +192,7 @@ public class InputManager : MonoBehaviour
                 this.InputVector.Set(tempDeltaDirection.x / this.JoyMaxRadius, tempDeltaDirection.y / this.JoyMaxRadius);
             }
             // if is inside of the joy Detection area and is a new touch
-            else if (JoyDetectionArea.Contains(touch.position) && touch.phase == TouchPhase.Began)
+            else if (JoyDetectionArea.Contains(touch.position * this.canvasProportion) && touch.phase == TouchPhase.Began)
             {
                 // set the joy to visible
                 IsJoyStickVisible = true;
@@ -178,18 +206,6 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    /// <Summary>
-    /// Get the jump value
-    /// </Summary>
-    private bool GetJumpValue()
-    {
-        // check if the axis as a valid input
-        if (Input.GetAxis("Jump") == 1f && jumpRealeased) { jumpRealeased = false; return true; }
-        // reset the press locker
-        else if (Input.GetAxis("Jump") == 0f) jumpRealeased = true;
-        // return false if not
-        return false;
-    }
 
     ///<Summary>
     /// Get the action state press
@@ -217,6 +233,9 @@ public class InputManager : MonoBehaviour
         {
             // Set a new State to the input system
             this.IsEnable = value;
+            // Set the jump button to the same enable state
+            this.jumpBtn.enabled = this.jumpBtnImg.enabled = this.IsEnable;
+
             // make sure that joy is hide
             if (!this.enabled) IsJoyStickVisible = this.enabled;
         }
@@ -274,6 +293,7 @@ public class InputManager : MonoBehaviour
                         joyBackImg.color = JoyKnobImg.color = Color.white;
                 }
             }
+
         }
     }
     #endregion
