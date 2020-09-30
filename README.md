@@ -29,7 +29,11 @@ Base character model, with bones and painted influence
   - - [ ] Player action response
     * - [ ] Grab/Drag Objects
 
-# Information system
+# Information system (Mobile adaptation)
+
+- [] Mobile Implementation
+  - - [x] JoyStick Implementation
+  - - [ ] Jump Screen Action
 
 ### Debug Info
 

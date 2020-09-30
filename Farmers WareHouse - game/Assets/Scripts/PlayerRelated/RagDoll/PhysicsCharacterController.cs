@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
 
@@ -109,14 +108,16 @@ public class PhysicsCharacterController : MonoBehaviour
                     {
                         // if not setted properly, debug and close
                         Debug.LogError($"GO -> {bPart.partGO.name} doesnt have a valid target!");
-                        EditorApplication.ExitPlaymode();
+                        // close aplication
+                        AplicationFuncs.CloseApp();
                     }
                 }
                 else
                 {
                     //if fails and its in editor, stop and debug
                     Debug.LogError($"GO -> {bPart.partGO.name} doesnt have a Configurable joint!");
-                    EditorApplication.ExitPlaymode();
+                    // close aplication
+                    AplicationFuncs.CloseApp();
                 }
             }
         }
@@ -205,12 +206,12 @@ public class PhysicsCharacterController : MonoBehaviour
     /// </summary>
     /// <return>Return the vector forward</return>
     public Vector3 GetPhysicsForward { get { return this.transform.forward; } }
-    
+
     /// <summary>
     /// Get the current gameVelocity
     /// </summary>
     public float GetCurrentVelocity { get { return mainRB.velocity.magnitude; } }
-    
+
     /// <summary>
     /// Get the state for the current physics state
     /// </summary>

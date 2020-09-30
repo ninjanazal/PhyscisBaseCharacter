@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class PlayerCore : MonoBehaviour
@@ -71,7 +70,11 @@ public class PlayerCore : MonoBehaviour
         // Validate the reff
         // if fails to find the physics controller
         if (!physicsCharacter || !playerTargetAnimator)
-        { EditorApplication.ExitPlaymode(); return; }
+        {
+            // Close the aplication
+            AplicationFuncs.CloseApp();
+            return;
+        }
 
         // Debug information and initialize  the parts
         InformationPanel.DebugConsoleInput("Physics System connected!");

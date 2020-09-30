@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
 using UnityEditor;
+using UnityEngine;
 
 // Custom editor for the physics character controller
 [CustomEditor(typeof(PhysicsCharacterController))]
@@ -114,3 +115,4 @@ public class PhysicsCharacterControllerEditor : Editor
         EditorGUILayout.EndVertical();
     }
 }
+#endif
