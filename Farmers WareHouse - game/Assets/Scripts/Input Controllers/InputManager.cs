@@ -114,7 +114,7 @@ public class InputManager : MonoBehaviour
 
         // calculate the canvas proportion
         this.canvasProportion = Vector2.one / this.transform.localScale;
-        this.SafeZoneFixedToCanvas = AplicationFuncs.ResizedRect(rect: Screen.safeArea, proportion: canvasProportion);
+        this.SafeZoneFixedToCanvas = AplicationFuncs.SafeToSafeCanvas(canvasSizeDelta: Screen.safeArea, safeArea: Screen.safeArea);
 
         Debug.Log(canvasProportion);
         Debug.Log(Screen.safeArea);
