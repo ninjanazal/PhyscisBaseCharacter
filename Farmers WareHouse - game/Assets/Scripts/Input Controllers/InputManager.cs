@@ -22,7 +22,7 @@ public class InputManager : MonoBehaviour
     // action button pressed
     // evaluate if the button as been realeaded after pressed
     private bool actionPressed = false;
-    private Vector2 canvasProportion = Vector2.zero; // reff to input related canvas
+    private RectTransform inputCanvasRect; // reff to the input canvas
     private Rect SafeZoneFixedToCanvas = Rect.zero;  // safe soze calculated for the canvas size
 
     // JOYSTICK INFO    -   -   -   -   -
@@ -57,18 +57,27 @@ public class InputManager : MonoBehaviour
     [Header("Input Setting - Jump Button")]
     [Tooltip("Margin from bottom and top")] public Vector2 JumpPercentMargin = Vector2.zero;
 
-    // Start
-    private void Start() =>
+    // On Awake check the singleton values
+    private void Awake()
+    {
+        // check if the singleton exists or not
+        if (instance == null) instance = this;
+        // If exists and is different from this, destroy
+        else if (InputManager.Instance != this) Destroy(this);
+        // Display information
+        InformationPanel.DebugConsoleInput("Input Manager Singleton validation!");
+    }
+    private void Start()
+    {
         // Initialize the singleton
         InitSingleton();
-
+    }
     private void FixedUpdate()
     {
         // call registed delegates
         // Press Action
         if (GetActionValue()) actionDelegate();
     }
-
     private void Update()
     {
         // if is enable
@@ -104,20 +113,13 @@ public class InputManager : MonoBehaviour
     ///</Summary>
     public void InitSingleton()
     {
-        // check if the singleton exists or not
-        if (instance == null) instance = this;
-        // If exists and is different from this, destroy
-        else if (InputManager.Instance != this) Destroy(this);
-
         // Set as enable
         this.IsEnable = true;
 
         // calculate the canvas proportion
-        this.canvasProportion = Vector2.one / this.transform.localScale;
-        this.SafeZoneFixedToCanvas = AplicationFuncs.SafeToSafeCanvas(canvasSizeDelta: Screen.safeArea, safeArea: Screen.safeArea);
+        this.inputCanvasRect = this.GetComponent<RectTransform>();
+        this.SafeZoneFixedToCanvas = AplicationFuncs.SafeToSafeCanvas(canvasRect: inputCanvasRect.rect);
 
-        Debug.Log(canvasProportion);
-        Debug.Log(Screen.safeArea);
         Debug.Log(SafeZoneFixedToCanvas);
         // calculate the area for joyDetection
         JoyDetectionArea =
@@ -152,11 +154,15 @@ public class InputManager : MonoBehaviour
         this.jumpBtnRct = this.jumpBtnImg.GetComponent<RectTransform>();
 
         // calculate the jump button position based on margin and placed in safe area
-        this.jumpBtnRct.position = new Vector2(
-            SafeZoneFixedToCanvas.xMax,
-             SafeZoneFixedToCanvas.yMax);
+        this.jumpBtnRct.anchoredPosition = new Vector2(
+            SafeZoneFixedToCanvas.xMax - (SafeZoneFixedToCanvas.width * JumpPercentMargin.x + jumpBtnRct.rect.width * 0.5f),
+            SafeZoneFixedToCanvas.yMin + SafeZoneFixedToCanvas.height * JumpPercentMargin.y + jumpBtnRct.rect.height * 0.5f);
+
         // Set joy to invisible
         IsJoyStickVisible = false;
+
+        // Debug thats ready
+        InformationPanel.DebugConsoleInput("Input Manager valid and Online!");
     }
 
     /// <summary>
@@ -192,7 +198,8 @@ public class InputManager : MonoBehaviour
                 this.InputVector.Set(tempDeltaDirection.x / this.JoyMaxRadius, tempDeltaDirection.y / this.JoyMaxRadius);
             }
             // if is inside of the joy Detection area and is a new touch
-            else if (JoyDetectionArea.Contains(touch.position * this.canvasProportion) && touch.phase == TouchPhase.Began)
+            else if (JoyDetectionArea.Contains(AplicationFuncs.ScreenToCanvasPos(touch.position, inputCanvasRect.rect)) &&
+             touch.phase == TouchPhase.Began)
             {
                 // set the joy to visible
                 IsJoyStickVisible = true;
@@ -201,7 +208,7 @@ public class InputManager : MonoBehaviour
                 this.StartPosition = touch.position;
 
                 // place the joy on the touch position
-                this.joyBackRect.position = touch.position;
+                this.joyBackRect.anchoredPosition = AplicationFuncs.ScreenToCanvasPos(touch.position, inputCanvasRect.rect);
             }
         }
     }

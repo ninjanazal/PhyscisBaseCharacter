@@ -113,10 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf279fa7bf113c469c1936541842df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScreenPercentDetect: 0.3
+  ScreenPercentDetect: 0.35
   shouldReturnToDefault: 1
-  positionPercent: {x: 0.35, y: 0.2}
-  JumpPercentMargin: {x: 0, y: 0}
+  positionPercent: {x: 0.4, y: 0.25}
+  JumpPercentMargin: {x: 0.09, y: 0.05}
 --- !u!1 &5776746963331663489
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 2471186713282913983}
   - component: {fileID: 3338269466141874752}
   - component: {fileID: 5598196261578497921}
+  - component: {fileID: 1780056483}
   m_Layer: 0
   m_Name: JumpBtn
   m_TagString: Untagged
@@ -152,8 +153,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1839, y: 200}
-  m_SizeDelta: {x: 251, y: 251}
+  m_AnchoredPosition: {x: 126, y: 125.5}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2471186713282913983
 CanvasRenderer:
@@ -235,19 +236,36 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3338269466141874752}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3414350429533483337}
-        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
-        m_MethodName: JumbButtonPressCall
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1780056483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5776746963331663489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3414350429533483337}
+          m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+          m_MethodName: JumbButtonPressCall
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6391862281005830567
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,8 +301,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 316, y: 323}
-  m_SizeDelta: {x: 294, y: 294}
+  m_AnchoredPosition: {x: 337.40002, y: 315.5}
+  m_SizeDelta: {x: 316.4724, y: 316.4724}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6736323424576557600
 CanvasRenderer:
@@ -355,8 +373,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 147, y: 147}
-  m_SizeDelta: {x: 170.41837, y: 170.41837}
+  m_AnchoredPosition: {x: 158.74, y: 158.74}
+  m_SizeDelta: {x: 171.09967, y: 171.09967}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1519786093768042881
 CanvasRenderer:

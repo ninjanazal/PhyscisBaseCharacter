@@ -4,6 +4,10 @@ Game that joins farming and warehouse workd. Need to fill orders in the warehous
 (This may turn into a funny physics base game, with the faming and warehouse manegement)
 |
 
+** CHANGE LOG **
+(2-10) - Since is a mobile game, may drop the physics part of the game.
+screen Coords to canvas position is working well
+
 # Base Model
 
 Base character model, with bones and painted influence
@@ -33,7 +37,11 @@ Base character model, with bones and painted influence
 
 - [] Mobile Implementation
   - - [x] JoyStick Implementation
-  - - [ ] Jump Screen Action
+  - - [x] Jump Screen Action
+
+NOTE::
+(DONE) Implementing correct translation from pixel positions to correct canvas position
+(TODO) Improving performance for the game. ps:: reduce render reduce the
 
 ### Debug Info
 

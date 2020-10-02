@@ -24,7 +24,7 @@ public class InformationPanel : MonoBehaviour
     private float fps_timer = 0f;
 
     // monobehavior start
-    private void Start()
+    private void Awake()
     {
         // inicia a consola de debug
         InitConsole(debug_panel);

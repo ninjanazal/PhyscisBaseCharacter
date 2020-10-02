@@ -62,6 +62,10 @@ public class PlayerCore : MonoBehaviour
     /// </summary>
     private void InitController()
     {
+        // TO REMOVE -  -   -   -   -   
+        Application.targetFrameRate = 140;
+        QualitySettings.vSyncCount = 0;
+
         // Get the reff for the physics controller
         physicsCharacter = GetComponentInChildren<PhysicsCharacterController>();
         // get the ref of the target animator
