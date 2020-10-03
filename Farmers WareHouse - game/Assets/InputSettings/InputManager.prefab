@@ -116,7 +116,7 @@ MonoBehaviour:
   ScreenPercentDetect: 0.35
   shouldReturnToDefault: 1
   positionPercent: {x: 0.4, y: 0.25}
-  JumpPercentMargin: {x: 0.09, y: 0.05}
+  JumpPercentMargin: {x: 0.1, y: 0.05}
 --- !u!1 &5776746963331663489
 GameObject:
   m_ObjectHideFlags: 0

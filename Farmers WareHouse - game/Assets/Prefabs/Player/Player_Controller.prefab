@@ -263,7 +263,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &1110063136673927917
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -349,8 +349,8 @@ ConfigurableJoint:
   m_RotationDriveMode: 0
   m_AngularXDrive:
     serializedVersion: 3
-    positionSpring: 0
-    positionDamper: 0
+    positionSpring: 100
+    positionDamper: 20
     maximumForce: 3.4028233e+38
   m_AngularYZDrive:
     serializedVersion: 3
@@ -1068,7 +1068,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &5688585809816841779
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1154,8 +1154,8 @@ ConfigurableJoint:
   m_RotationDriveMode: 0
   m_AngularXDrive:
     serializedVersion: 3
-    positionSpring: 0
-    positionDamper: 0
+    positionSpring: 100
+    positionDamper: 20
     maximumForce: 3.4028233e+38
   m_AngularYZDrive:
     serializedVersion: 3
@@ -1550,7 +1550,7 @@ MonoBehaviour:
   characterMaxVelocity: 10
   activeDrag: 0.75
   JumpValue: 2.5
-  animationSpeedInfluence: 0.2
+  animationSpeedInfluence: 0.175
   LeftHandGO: {fileID: 5299429021756245414}
   RightHandGO: {fileID: 7801422720800667099}
 --- !u!1 &7764291241867745813
@@ -2397,7 +2397,7 @@ ConfigurableJoint:
   m_TargetVelocity: {x: 0, y: 0, z: 0}
   m_XDrive:
     serializedVersion: 3
-    positionSpring: 800
+    positionSpring: 250
     positionDamper: 100
     maximumForce: 3.4028233e+38
   m_YDrive:

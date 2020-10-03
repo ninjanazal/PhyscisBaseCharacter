@@ -1,12 +1,11 @@
-# farmers_warehouse_game
+# Physics Base Character
 
-Game that joins farming and warehouse workd. Need to fill orders in the warehouse, buid the pallets and ship it, but before you need to gathering those itens (Android &amp; ~Pc)
-(This may turn into a funny physics base game, with the faming and warehouse manegement)
-|
+Physics base character for mobile test
 
-** CHANGE LOG **
-(2-10) - Since is a mobile game, may drop the physics part of the game.
-screen Coords to canvas position is working well
+## ** CHANGE LOG **
+
+- (2-10) - Since is a mobile game, may drop the physics part of the game.
+  screen Coords to canvas position is working well.
 
 # Base Model
 
@@ -35,13 +34,15 @@ Base character model, with bones and painted influence
 
 # Information system (Mobile adaptation)
 
-- [] Mobile Implementation
+- [x] Mobile Implementation
   - - [x] JoyStick Implementation
   - - [x] Jump Screen Action
+- [ ] Inprove performace issue
 
-NOTE::
-(DONE) Implementing correct translation from pixel positions to correct canvas position
-(TODO) Improving performance for the game. ps:: reduce render reduce the
+## NOTE::
+
+- (DONE) Implementing correct translation from pixel positions to correct canvas position
+- (TODO) Improving performance for the game. ps:: reduce render reduce the
 
 ### Debug Info
 

@@ -667,7 +667,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh35074
+  m_Name: pb_Mesh15796
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2064,7 +2064,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34914
+  m_Name: pb_Mesh15706
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2571,7 +2571,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34854
+  m_Name: pb_Mesh15662
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3047,7 +3047,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh34996
+  m_Name: pb_Mesh15740
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3803,6 +3803,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 773087070}
     m_Modifications:
+    - target: {fileID: 2224026227038873700, guid: 09cae2a7af7a24448a15d6c761491b96,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 337.4004
+      objectReference: {fileID: 0}
     - target: {fileID: 3414350429533483343, guid: 09cae2a7af7a24448a15d6c761491b96,
         type: 3}
       propertyPath: m_Name
@@ -3982,11 +3987,6 @@ PrefabInstance:
       propertyPath: cameraTarget
       value: 
       objectReference: {fileID: 2054430199}
-    - target: {fileID: 7907586271516650477, guid: 411a5fd59d8fe1e44bfb6fcb0bff6eaa,
-        type: 3}
-      propertyPath: far clip plane
-      value: 250
-      objectReference: {fileID: 0}
     - target: {fileID: 7907586271516650479, guid: 411a5fd59d8fe1e44bfb6fcb0bff6eaa,
         type: 3}
       propertyPath: m_Name
@@ -4001,6 +4001,88 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1451338259, guid: 05e7bd4ffe02bb448b40d135a5b03bdc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451338259, guid: 05e7bd4ffe02bb448b40d135a5b03bdc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451338259, guid: 05e7bd4ffe02bb448b40d135a5b03bdc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1299114977784610415, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269621, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYZDrive.positionSpring
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYLimit.limit
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularZLimit.limit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularZMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularXMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_HighAngularXLimit.limit
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_LowAngularXLimit.limit
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2706239947816269622, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_TargetRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3132384183197433399, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317745083048166899, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5317745083048166899, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6229371028899037595, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4056,10 +4138,95 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6553009303701199813, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553009303701199835, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_TargetRotation.x
+      value: 0.33
+      objectReference: {fileID: 0}
     - target: {fileID: 6717395228272319265, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
         type: 3}
       propertyPath: m_Name
       value: Player_Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764291241867745808, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764291241867745814, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_TargetRotation.x
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7827719029561797623, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600814, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYZDrive.positionSpring
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularYLimit.limit
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularZLimit.limit
+      value: 76.42059
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularZMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_AngularXMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_HighAngularXLimit.limit
+      value: 28.190426
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_LowAngularXLimit.limit
+      value: -14.461965
+      objectReference: {fileID: 0}
+    - target: {fileID: 8472874513691600815, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_TargetRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809834438627925724, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: bodyParts.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8926548004057944238, guid: 05e7bd4ffe02bb448b40d135a5b03bdc,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05e7bd4ffe02bb448b40d135a5b03bdc, type: 3}
